@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomobileSystemReadWrite", "AutomobileSystemReadWrite\AutomobileSystemReadWrite.csproj", "{276C045C-D3A3-4991-B76D-896A0BB7651D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomobileRent.Core", "AutomobileRent.Core\AutomobileRent.Core.csproj", "{AA914370-A707-466C-947A-E7016476909D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{276C045C-D3A3-4991-B76D-896A0BB7651D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{276C045C-D3A3-4991-B76D-896A0BB7651D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{276C045C-D3A3-4991-B76D-896A0BB7651D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{276C045C-D3A3-4991-B76D-896A0BB7651D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA914370-A707-466C-947A-E7016476909D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA914370-A707-466C-947A-E7016476909D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA914370-A707-466C-947A-E7016476909D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA914370-A707-466C-947A-E7016476909D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15931971-19F4-4964-856B-A0331ADE2B21}
+	EndGlobalSection
+EndGlobal
