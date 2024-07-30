@@ -23,9 +23,9 @@ namespace AutomobileRent.Core.Services
         {
             AllOrders.Add(order);
 
-            Console.WriteLine("Your order was successful!");
-            Console.WriteLine("Price: " + order.CountRentPrice());
-            Console.WriteLine("Rental ends: " + order.GetRentEndDate);
+            //Console.WriteLine("Your order was successful!");
+            //Console.WriteLine("Price: " + order.CountRentPrice());
+            //Console.WriteLine("Rental ends: " + order.GetRentEndDate);
         }
 
         public List<RentOrder> GetAllOrders()

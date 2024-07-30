@@ -25,7 +25,7 @@ namespace AutomobileRent.Core.Models
 
         public override string ToString()
         {
-            return $"Id: {Id}; Maker: {Maker}; Model: {Model}; Rent price: {RentPrice} Eur/day; Battery capacity {BatteryCapacity}; Charge time: {ChargeTime}";
+            return $"Id: {Id}; Maker: {Maker}; Model: {Model}; Rent price: {RentPrice} Eur/day; Battery capacity {BatteryCapacity}; Charge time: {ChargeTime} hr.";
         }
 
     }

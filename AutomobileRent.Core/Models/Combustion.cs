@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutomobileRent.Core.Models
 {
-    internal class Combustion : Car
+    public class Combustion : Car
     {
         public decimal FuelConsumption { get; set; }
 
@@ -18,5 +18,12 @@ namespace AutomobileRent.Core.Models
             RentPrice = rentPrice;
             FuelConsumption = fuelConsumption;
         }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}; Maker: {Maker}; Model: {Model}; Rent price: {RentPrice} Eur/day; Fuel consumption: {FuelConsumption} l/100km";
+        }
+
+
     }
 }
