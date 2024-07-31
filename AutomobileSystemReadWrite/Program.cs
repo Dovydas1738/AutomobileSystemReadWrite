@@ -43,7 +43,7 @@ namespace MyProgram
                     case "1":
 
                         Console.WriteLine("All available cars: ");
-                        List<Car> allCars = _carsRepository.ReadCars();
+                        List<Car> allCars = _autoRentService.GetCars();
 
                         foreach (Car car in allCars)
                         {
@@ -70,7 +70,7 @@ namespace MyProgram
                     case "2":
 
                         Console.WriteLine("All customers: ");
-                        List<Customer> allCustomers = _customersRepository.ReadCustomers();
+                        List<Customer> allCustomers = _customersService.GetAllCustomers();
 
                         foreach (Customer customer in allCustomers)
                         {
@@ -122,7 +122,7 @@ namespace MyProgram
                             decimal newChargeTime = decimal.Parse(Console.ReadLine());
 
                             Car newCar = new Electric(newId, newMaker, newModel, newRentPrice, newBatteryCapacity, newChargeTime);
-                            _carsService.AddCar(newCar);
+                            _autoRentService.AddNewCar(newCar);
 
                             Console.WriteLine("Car created successfully!");
 
@@ -133,7 +133,7 @@ namespace MyProgram
                             decimal newFuelConsumption = decimal.Parse(Console.ReadLine());
 
                             Car newCar = new Combustion(newId, newMaker, newModel, newRentPrice, newFuelConsumption);
-                            _carsService.AddCar(newCar);
+                            _autoRentService.AddNewCar(newCar);
 
                             Console.WriteLine("Car created successfully!");
                         }
@@ -171,7 +171,7 @@ namespace MyProgram
 
                         bool doesExist = false;
 
-                        foreach (Customer oldCustomer in _customersRepository.ReadCustomers())
+                        foreach (Customer oldCustomer in _customersService.GetAllCustomers())
                         {
                             if (oldCustomer.Name == name && oldCustomer.Surname == surname)
                             {
