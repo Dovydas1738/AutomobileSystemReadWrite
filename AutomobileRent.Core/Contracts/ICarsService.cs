@@ -14,7 +14,10 @@ namespace AutomobileRent.Core.Contracts
         List<Car> GetAllCars();
         void AddCar(Car car);
         List<Car> SearchByMaker(string maker);
-
+        List<Electric> ReadAllElectric();
+        List<Combustion> ReadAllCombustion();
+        void WriteOneElectric(Electric electric);
+        void WriteOneCombustion(Combustion combustion);
 
     }
 }

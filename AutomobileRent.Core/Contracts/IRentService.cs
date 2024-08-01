@@ -13,5 +13,7 @@ namespace AutomobileRent.Core.Contracts
         List<RentOrder> GetAllOrders();
         decimal GetTotalRentPrice();
         List<RentOrder> GetOrdersByCustomer(Customer customer);
+        List<RentOrder> ReadAllRentOrders();
+        void WriteOneRentOrder(RentOrder rentOrder);
      }
 }

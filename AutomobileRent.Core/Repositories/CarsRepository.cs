@@ -19,7 +19,15 @@ namespace AutomobileRent.Core.Repositories
             _filePath = carsFilePath;
         }
 
+        public List<Combustion> ReadAllCombustion()
+        {
+            throw new NotImplementedException();
+        }
 
+        public List<Electric> ReadAllElectric()
+        {
+            throw new NotImplementedException();
+        }
 
         public List<Car> ReadCars()
         {
@@ -89,6 +97,16 @@ namespace AutomobileRent.Core.Repositories
                 }
             }
 
+        }
+
+        public void WriteOneCombustion(Combustion combustion)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteOneElectric(Electric electric)
+        {
+            throw new NotImplementedException();
         }
     }
 }

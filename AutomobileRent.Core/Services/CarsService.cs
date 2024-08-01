@@ -14,6 +14,7 @@ namespace AutomobileRent.Core.Services
         
         private readonly ICarsRepository _carsRepository;
 
+
         public CarsService(ICarsRepository carsRepository)
         {
             _carsRepository = carsRepository;
@@ -43,15 +44,48 @@ namespace AutomobileRent.Core.Services
         public List<Car> SearchByMaker(string maker)
         {
             List<Car> searchResults = new List<Car>();
-            List<Car> cars = _carsRepository.ReadCars();
-            foreach(Car a in cars)
+            List<Electric> elCars = _carsRepository.ReadAllElectric();
+            List<Combustion> combCars = _carsRepository.ReadAllCombustion();
+            
+            
+            foreach(Car a in elCars)
             {
                 if(a.Maker == maker)
                 {
                     searchResults.Add(a);
                 }
             }
+
+            foreach (Car a in combCars)
+            {
+                if (a.Maker == maker)
+                {
+                    searchResults.Add(a);
+                }
+            }
+
+
             return searchResults;
+        }
+
+        public List<Electric> ReadAllElectric()
+        {
+            return _carsRepository.ReadAllElectric();
+        }
+
+        public List<Combustion> ReadAllCombustion()
+        {
+            return _carsRepository.ReadAllCombustion();
+        }
+
+        public void WriteOneElectric(Electric electric)
+        {
+            _carsRepository.WriteOneElectric(electric);
+        }
+
+        public void WriteOneCombustion(Combustion combustion)
+        {
+            _carsRepository.WriteOneCombustion(combustion);
         }
     }
 }

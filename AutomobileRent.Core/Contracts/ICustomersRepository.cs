@@ -12,6 +12,7 @@ namespace AutomobileRent.Core.Contracts
         List<Customer> ReadCustomers();
         void WriteCustomers(List<Customer> customers);
         void WriteOneCustomer(Customer customer);
-
+        List<Customer> ReadCustomersDB();
+        void WriteCustomerDB(Customer customer);
     }
 }

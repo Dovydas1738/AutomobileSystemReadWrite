@@ -32,5 +32,45 @@ namespace AutomobileRent.Core.Services
             _carsService.AddCar(car);
         }
 
+        public List<Electric> GetAllElectric()
+        {
+            return _carsService.ReadAllElectric();
+        }
+
+        public List<Combustion> GetAllCombustion()
+        {
+            return _carsService.ReadAllCombustion();
+        }
+
+        public void AddNewElectric(Electric electric)
+        {
+            _carsService.WriteOneElectric(electric);
+        }
+
+        public void AddNewCombustion(Combustion combustion)
+        {
+            _carsService.WriteOneCombustion(combustion);
+        }
+
+        public List<Customer> GetAllCustomers()
+        {
+            return _customersService.ReadCustomersDB();
+        }
+
+        public void AddNewCustomer(Customer customer)
+        {
+            _customersService.WriteCustomerDB(customer);
+        }
+
+        public List<RentOrder> GetAllRentOrders()
+        {
+            return _rentService.ReadAllRentOrders();
+        }
+
+        public void AddOneRentOrder(RentOrder rentOrder)
+        {
+            _rentService.WriteOneRentOrder(rentOrder);
+        }
+
     }
 }

@@ -23,6 +23,22 @@ namespace AutomobileRent.Core.Models
 
         }
 
+        public Electric(string maker, string model, decimal rentPrice, int batteryCapacity, decimal chargeTime) : base(maker, model, rentPrice)
+        {
+            Maker = maker;
+            Model = model;
+            RentPrice = rentPrice;
+            BatteryCapacity = batteryCapacity;
+            ChargeTime = chargeTime;
+
+        }
+
+
+        public Electric()
+        {
+
+        }
+
         public override string ToString()
         {
             return $"Id: {Id}; Maker: {Maker}; Model: {Model}; Rent price: {RentPrice} Eur/day; Battery capacity {BatteryCapacity}; Charge time: {ChargeTime} hr.";

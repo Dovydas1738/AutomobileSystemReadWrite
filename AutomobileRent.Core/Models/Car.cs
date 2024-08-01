@@ -21,6 +21,16 @@ namespace AutomobileRent.Core.Models
             RentPrice = rentPrice;
         }
 
+        public Car(string maker, string model, decimal rentPrice)
+        {
+            Maker = maker;
+            Model = model;
+            RentPrice = rentPrice;
+        }
+
+
+        public Car() { }
+
         public string GetInfo()
         {
             return $"Id: {Id}; Maker: {Maker}; Model: {Model}; Rent price: {RentPrice} Eur/day.";

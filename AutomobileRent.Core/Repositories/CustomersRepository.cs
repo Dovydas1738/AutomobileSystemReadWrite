@@ -28,11 +28,21 @@ namespace AutomobileRent.Core.Repositories
                 {
                     string line = customerReader.ReadLine();
                     string[] values = line.Split(",");
-                    customers.Add(new Customer(values[0], values[1], DateOnly.Parse(values[2])));
+                    customers.Add(new Customer(values[0], values[1], DateTime.Parse(values[2])));
                 }
                 return customers;
             }
 
+        }
+
+        public List<Customer> ReadCustomersDB()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteCustomerDB(Customer customer)
+        {
+            throw new NotImplementedException();
         }
 
         public void WriteCustomers(List<Customer> customers)

@@ -10,10 +10,12 @@ namespace MyProgram
     {
         public static void Main(string[] args)
         {
-
-            IRentService _rentService = new RentService();
-            ICarsRepository _carsRepository = new CarsRepository("C:\\Users\\dovis\\source\\repos\\AutomobileSystemReadWrite\\AutomobileRent.Core\\Repositories\\CarsData.txt");
-            ICustomersRepository _customersRepository = new CustomersRepository("C:\\Users\\dovis\\source\\repos\\AutomobileSystemReadWrite\\AutomobileRent.Core\\Repositories\\CustomersData.txt");
+            IRentOrderRepository _rentOrderRepository = new RentOrderDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;");
+            IRentService _rentService = new RentService(_rentOrderRepository);
+            //ICarsRepository _carsRepository = new CarsRepository("C:\\Users\\dovis\\source\\repos\\AutomobileSystemReadWrite\\AutomobileRent.Core\\Repositories\\CarsData.txt");
+            ICarsRepository _carsRepository = new CarsDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;");
+            //ICustomersRepository _customersRepository = new CustomersRepository("C:\\Users\\dovis\\source\\repos\\AutomobileSystemReadWrite\\AutomobileRent.Core\\Repositories\\CustomersData.txt");
+            ICustomersRepository _customersRepository = new CustomersDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;");
             ICarsService _carsService = new CarsService(_carsRepository);
             ICustomersService _customersService = new CustomersService(_customersRepository);
             AutoRentService _autoRentService = new AutoRentService(_carsService, _customersService, _rentService);
@@ -33,6 +35,7 @@ namespace MyProgram
             Console.WriteLine("7. Get total price of all orders");
             Console.WriteLine("8. Exit");
 
+
             string choice2 = Console.ReadLine();
 
             while (choice2 != "8")
@@ -41,27 +44,24 @@ namespace MyProgram
                 switch (choice2)
                 {
                     case "1":
+                        Console.WriteLine("All available combustion cars: ");
+                        List<Combustion> allCombustionCars = _autoRentService.GetAllCombustion();
 
-                        Console.WriteLine("All available cars: ");
-                        List<Car> allCars = _autoRentService.GetCars();
+                        foreach (Car car in allCombustionCars)
+                        {
+                            Console.WriteLine(car);
+                        }
 
-                        foreach (Car car in allCars)
+                        Console.WriteLine("All available electric cars: ");
+                        List<Electric> allElectricCars = _autoRentService.GetAllElectric();
+
+                        foreach (Car car in allElectricCars)
                         {
                             Console.WriteLine(car);
                         }
 
 
-                        Console.WriteLine();
-                        Console.WriteLine("Anything else?");
-                        Console.WriteLine();
-                        Console.WriteLine("1. See all cars");
-                        Console.WriteLine("2. See all customers");
-                        Console.WriteLine("3. Add a car");
-                        Console.WriteLine("4. Add a customer");
-                        Console.WriteLine("5. Make an order");
-                        Console.WriteLine("6. See customer's orders");
-                        Console.WriteLine("7. Get total price of all orders");
-                        Console.WriteLine("8. Exit");
+                        GetMenu();
 
                         choice2 = Console.ReadLine();
 
@@ -70,7 +70,7 @@ namespace MyProgram
                     case "2":
 
                         Console.WriteLine("All customers: ");
-                        List<Customer> allCustomers = _customersService.GetAllCustomers();
+                        List<Customer> allCustomers = _autoRentService.GetAllCustomers();
 
                         foreach (Customer customer in allCustomers)
                         {
@@ -78,17 +78,7 @@ namespace MyProgram
                         }
 
 
-                        Console.WriteLine();
-                        Console.WriteLine("Anything else?");
-                        Console.WriteLine();
-                        Console.WriteLine("1. See all cars");
-                        Console.WriteLine("2. See all customers");
-                        Console.WriteLine("3. Add a car");
-                        Console.WriteLine("4. Add a customer");
-                        Console.WriteLine("5. Make an order");
-                        Console.WriteLine("6. See customer's orders");
-                        Console.WriteLine("7. Get total price of all orders");
-                        Console.WriteLine("8. Exit");
+                        GetMenu();
 
                         choice2 = Console.ReadLine();
 
@@ -98,8 +88,8 @@ namespace MyProgram
 
                     case "3":
 
-                        Console.WriteLine("Enter car Id");
-                        int newId = int.Parse(Console.ReadLine());
+                        //Console.WriteLine("Enter car Id");
+                        //int newId = int.Parse(Console.ReadLine());
 
                         Console.WriteLine("Enter car Maker");
                         string newMaker = Console.ReadLine();
@@ -121,19 +111,19 @@ namespace MyProgram
                             Console.WriteLine("Enter Charge Time");
                             decimal newChargeTime = decimal.Parse(Console.ReadLine());
 
-                            Car newCar = new Electric(newId, newMaker, newModel, newRentPrice, newBatteryCapacity, newChargeTime);
-                            _autoRentService.AddNewCar(newCar);
+                            Electric newCar = new Electric(newMaker, newModel, newRentPrice, newBatteryCapacity, newChargeTime);
+                            _autoRentService.AddNewElectric(newCar);
 
                             Console.WriteLine("Car created successfully!");
 
                         }
                         else if (choice == "c")
                         {
-                            Console.WriteLine("Enter Fuel Consumption");
+                            Console.WriteLine("Enter Fuel Consumption (0.00 format)");
                             decimal newFuelConsumption = decimal.Parse(Console.ReadLine());
 
-                            Car newCar = new Combustion(newId, newMaker, newModel, newRentPrice, newFuelConsumption);
-                            _autoRentService.AddNewCar(newCar);
+                            Combustion newCar = new Combustion(newMaker, newModel, newRentPrice, newFuelConsumption);
+                            _autoRentService.AddNewCombustion(newCar);
 
                             Console.WriteLine("Car created successfully!");
                         }
@@ -142,17 +132,7 @@ namespace MyProgram
                             Console.WriteLine("Wrong input");
                         }
 
-                        Console.WriteLine();
-                        Console.WriteLine("Anything else?");
-                        Console.WriteLine();
-                        Console.WriteLine("1. See all cars");
-                        Console.WriteLine("2. See all customers");
-                        Console.WriteLine("3. Add a car");
-                        Console.WriteLine("4. Add a customer");
-                        Console.WriteLine("5. Make an order");
-                        Console.WriteLine("6. See customer's orders");
-                        Console.WriteLine("7. Get total price of all orders");
-                        Console.WriteLine("8. Exit");
+                        GetMenu();
 
                         choice2 = Console.ReadLine();
 
@@ -167,11 +147,11 @@ namespace MyProgram
                         string surname = Console.ReadLine();
 
                         Console.WriteLine("Customer's date of birth");
-                        DateOnly birthdate = DateOnly.Parse(Console.ReadLine());
+                        DateTime birthdate = DateTime.Parse(Console.ReadLine());
 
                         bool doesExist = false;
 
-                        foreach (Customer oldCustomer in _customersService.GetAllCustomers())
+                        foreach (Customer oldCustomer in _autoRentService.GetAllCustomers())
                         {
                             if (oldCustomer.Name == name && oldCustomer.Surname == surname)
                             {
@@ -185,23 +165,13 @@ namespace MyProgram
                         if (doesExist == false)
                         {
                             Customer newCustomer = new Customer(name, surname, birthdate);
-                            _customersService.AddCustomer(newCustomer);
+                            _autoRentService.AddNewCustomer(newCustomer);
 
                             Console.WriteLine("Customer created successfully!");
 
                         }
 
-                        Console.WriteLine();
-                        Console.WriteLine("Anything else?");
-                        Console.WriteLine();
-                        Console.WriteLine("1. See all cars");
-                        Console.WriteLine("2. See all customers");
-                        Console.WriteLine("3. Add a car");
-                        Console.WriteLine("4. Add a customer");
-                        Console.WriteLine("5. Make an order");
-                        Console.WriteLine("6. See customer's orders");
-                        Console.WriteLine("7. Get total price of all orders");
-                        Console.WriteLine("8. Exit");
+                        GetMenu();
 
                         choice2 = Console.ReadLine();
 
@@ -217,7 +187,7 @@ namespace MyProgram
                             Console.WriteLine("Customer's surname");
                             surname = Console.ReadLine();
 
-                            _customersService.SearchByNameSurname(name, surname);
+                            //_customersService.SearchByNameSurname(name, surname);
 
                             Customer orderingCustomer = _customersService.SearchByNameSurname(name, surname)[0];
 
@@ -231,11 +201,19 @@ namespace MyProgram
                             {
                                 Car chosenCar = _carsService.SearchByMaker(toChooseCar)[0];
 
+                                string carType = "Combustion";
+
+                                if(chosenCar is Electric)
+                                {
+                                    carType = "Electric";
+                                }
+
                                 Console.WriteLine("Enter rent duration (days)");
                                 int duration = int.Parse(Console.ReadLine());
 
-                                RentOrder newOrder = new RentOrder(orderingCustomer, chosenCar, DateTime.Now, duration);
-                                _rentService.CreateOrder(newOrder);
+                                RentOrder newOrder = new RentOrder(orderingCustomer, chosenCar, carType, DateTime.Now, duration);
+
+                                _autoRentService.AddOneRentOrder(newOrder);
 
                                 Console.WriteLine("Order was successful!");
                                 Console.WriteLine($"Price: {newOrder.CountRentPrice()}");
@@ -248,17 +226,7 @@ namespace MyProgram
                             Console.WriteLine("Something went wrong");
                         }
 
-                        Console.WriteLine();
-                        Console.WriteLine("Anything else?");
-                        Console.WriteLine();
-                        Console.WriteLine("1. See all cars");
-                        Console.WriteLine("2. See all customers");
-                        Console.WriteLine("3. Add a car");
-                        Console.WriteLine("4. Add a customer");
-                        Console.WriteLine("5. Make an order");
-                        Console.WriteLine("6. See customer's orders");
-                        Console.WriteLine("7. Get total price of all orders");
-                        Console.WriteLine("8. Exit");
+                        GetMenu();
 
                         choice2 = Console.ReadLine();
 
@@ -267,40 +235,37 @@ namespace MyProgram
                     case "6":
                         Console.WriteLine("Enter customer's name");
                         string nameSearch = Console.ReadLine();
+                        Console.WriteLine("Enter customer's surname");
+                        string surnameSearch = Console.ReadLine();
 
-                        bool hasOrders = false;
+                        int customerId = 0;
 
-                        foreach (RentOrder a in _rentService.GetAllOrders())
+                        foreach (Customer b in _autoRentService.GetAllCustomers())
                         {
-                            if (a.Customer.Name == nameSearch)
+                            if (b.Name == nameSearch && b.Surname == surnameSearch)
                             {
-                                foreach(RentOrder order in _rentService.GetOrdersByCustomer(a.Customer))
-                                {
-                                    Console.WriteLine(order);
-                                }
-
-                                
-                                hasOrders = true;
+                                customerId = b.CustomerId;
                             }
-
                         }
 
-                        if (hasOrders == false)
+                        if(customerId != 0)
+                        {
+                            foreach (RentOrder a in _autoRentService.GetAllRentOrders())
+                            {
+                                if (customerId == a.CustomerId)
+                                {
+                                    Console.WriteLine(a);
+                                }
+
+                            }
+                        }
+
+                        else
                         {
                             Console.WriteLine("Customer has no orders");
                         }
 
-                        Console.WriteLine();
-                        Console.WriteLine("Anything else?");
-                        Console.WriteLine();
-                        Console.WriteLine("1. See all cars");
-                        Console.WriteLine("2. See all customers");
-                        Console.WriteLine("3. Add a car");
-                        Console.WriteLine("4. Add a customer");
-                        Console.WriteLine("5. Make an order");
-                        Console.WriteLine("6. See customer's orders");
-                        Console.WriteLine("7. Get total price of all orders");
-                        Console.WriteLine("8. Exit");
+                        GetMenu();
 
                         choice2 = Console.ReadLine();
 
@@ -313,27 +278,69 @@ namespace MyProgram
                         Console.WriteLine("Total price of all rentals:");
                         Console.WriteLine(_rentService.GetTotalRentPrice());
 
-                        Console.WriteLine();
-                        Console.WriteLine("Anything else?");
-                        Console.WriteLine();
-                        Console.WriteLine("1. See all cars");
-                        Console.WriteLine("2. See all customers");
-                        Console.WriteLine("3. Add a car");
-                        Console.WriteLine("4. Add a customer");
-                        Console.WriteLine("5. Make an order");
-                        Console.WriteLine("6. See customer's orders");
-                        Console.WriteLine("7. Get total price of all orders");
-                        Console.WriteLine("8. Exit");
+                        GetMenu();
 
                         choice2 = Console.ReadLine();
 
 
 
                         break;
+
+                    //case "9":
+
+                    //    Console.WriteLine("All available electric cars: ");
+                    //    List<Electric> allElectricCars = _autoRentService.GetAllElectric();
+
+                    //    foreach (Car car in allElectricCars)
+                    //    {
+                    //        Console.WriteLine(car);
+                    //    }
+
+                    //    GetMenu();
+
+                    //    choice2 = Console.ReadLine();
+
+
+                    //    break;
+
+                    //case "10":
+
+                    //    Console.WriteLine("All available combustion cars: ");
+                    //    List<Combustion> allCombustionCars = _autoRentService.GetAllCombustion();
+
+                    //    foreach (Car car in allCombustionCars)
+                    //    {
+                    //        Console.WriteLine(car);
+                    //    }
+
+                    //    GetMenu();
+
+                    //    choice2 = Console.ReadLine();
+
+
+                    //    break;
                 }
 
             }
 
         }
+
+        public static void GetMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Anything else?");
+            Console.WriteLine();
+            Console.WriteLine("1. See all cars");
+            Console.WriteLine("2. See all customers");
+            Console.WriteLine("3. Add a car");
+            Console.WriteLine("4. Add a customer");
+            Console.WriteLine("5. Make an order");
+            Console.WriteLine("6. See customer's orders");
+            Console.WriteLine("7. Get total price of all orders");
+            Console.WriteLine("8. Exit");
+
+        }
+
+
     }
 }

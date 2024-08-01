@@ -14,15 +14,48 @@ namespace AutomobileRent.Core.Models
         public Car Car { get; set; }
         public DateTime RentStart { get; set; }
         public int RentDuration { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerSurname { get; set; }
+        public int CarId { get; set; }
+        public string Type { get; set; }
+
+        public int CustomerId { get; set; }
+        public decimal RentPrice { get; set; }
 
 
-        public RentOrder(Customer customer, Car car, DateTime rentStart, int rentDuration)
+
+        public RentOrder(Customer customer, Car car, string type, DateTime rentStart, int rentDuration)
         {
             Customer = customer;
             Car = car;
+            Type = type;
             RentStart = rentStart;
             RentDuration = rentDuration;
+            RentPrice = CountRentPrice();
         }
+
+        //public RentOrder(Customer customer, Car car, string type, DateTime rentStart, int rentDuration)
+        //{
+        //    Customer = customer;
+        //    Car = car;
+        //    Type = type;
+        //    RentStart = rentStart;
+        //    RentDuration = rentDuration;
+        //    RentPrice = CountRentPrice();
+        //}
+
+
+        public RentOrder() { }
+
+        //public RentOrder(int customerId, int carId, string type, DateTime rentStart, int rentDuration)
+        //{
+        //    CustomerId = customerId;
+        //    CarId = carId;
+        //    Type = type;
+        //    RentStart = rentStart;
+        //    RentDuration = rentDuration;
+        //    RentPrice = CountRentPrice();
+        //}
 
         public decimal CountRentPrice()
         {
@@ -35,7 +68,7 @@ namespace AutomobileRent.Core.Models
         }
         public override string ToString()
         {
-            return $"{Customer}, {Car}, rent start: {RentStart}, duration: {RentDuration}";
+            return $"Customer id: {CustomerId}, Car id: {CarId}, rent start: {RentStart}, duration: {RentDuration}";
         }
 
 

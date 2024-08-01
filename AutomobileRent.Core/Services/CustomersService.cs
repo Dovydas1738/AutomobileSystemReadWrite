@@ -30,6 +30,11 @@ namespace AutomobileRent.Core.Services
             return _customersRepository.ReadCustomers();
         }
 
+        public List<Customer> ReadCustomersDB()
+        {
+            return _customersRepository.ReadCustomersDB();
+        }
+
         public void ReadFromFile()
         {
             _customersRepository.ReadCustomers();
@@ -38,7 +43,7 @@ namespace AutomobileRent.Core.Services
         public List<Customer> SearchByNameSurname(string name, string surname)
         {
             List<Customer> customerSearchResult = new List<Customer>();
-            List<Customer> customers = _customersRepository.ReadCustomers();
+            List<Customer> customers = _customersRepository.ReadCustomersDB();
             foreach (Customer b in customers)
             {
                 if (b.Name == name && b.Surname == surname)
@@ -47,6 +52,11 @@ namespace AutomobileRent.Core.Services
                 }
             }
             return customerSearchResult;
+        }
+
+        public void WriteCustomerDB(Customer customer)
+        {
+            _customersRepository.WriteCustomerDB(customer);
         }
 
         public void WriteToFile(List<Customer> customers)

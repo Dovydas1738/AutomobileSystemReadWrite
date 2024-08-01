@@ -12,15 +12,28 @@ namespace AutomobileRent.Core.Models
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public DateOnly BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
+        public int CustomerId { get; set; }
 
 
-        public Customer(string name, string surname, DateOnly birthDate)
+        public Customer(string name, string surname, DateTime birthDate)
         {
             Name = name;
             Surname = surname;
             BirthDate = birthDate;
         }
+
+        //public Customer(int customerId, string name, string surname, DateTime birthDate)
+        //{
+        //    Name = name;
+        //    Surname = surname;
+        //    BirthDate = birthDate;
+        //    CustomerId = customerId;
+        //}
+
+
+        public Customer() { }
+
         public override string ToString()
         {
             return $"{Name} {Surname} {BirthDate}";

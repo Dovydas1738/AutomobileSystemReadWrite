@@ -12,5 +12,9 @@ namespace AutomobileRent.Core.Contracts
         List<Car> ReadCars();
         void WriteCars(List<Car> cars);
         void WriteOneCar(Car car);
+        List<Electric> ReadAllElectric();
+        List<Combustion> ReadAllCombustion();
+        void WriteOneElectric(Electric electric);
+        void WriteOneCombustion(Combustion combustion);
     }
 }

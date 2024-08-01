@@ -14,5 +14,7 @@ namespace AutomobileRent.Core.Contracts
         List<Customer> GetAllCustomers();
         void AddCustomer(Customer customer);
         List<Customer> SearchByNameSurname(string name, string surname);
+        List<Customer> ReadCustomersDB();
+        void WriteCustomerDB(Customer customer);
     }
 }

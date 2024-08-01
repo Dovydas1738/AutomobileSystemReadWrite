@@ -12,8 +12,12 @@ namespace AutomobileRent.Core.Services
 {
     public class RentService : IRentService
     {
-        private readonly ICarsRepository _carsRepository;
-        private readonly ICustomersRepository _customersRepository;
+        private readonly IRentOrderRepository _rentOrderRepository;
+        
+        public RentService(IRentOrderRepository rentOrderRepository)
+        {
+            _rentOrderRepository = rentOrderRepository;
+        }
 
         List<RentOrder> AllOrders = new List<RentOrder>();
 
@@ -50,11 +54,21 @@ namespace AutomobileRent.Core.Services
         {
             decimal totalPrice = 0;
 
-            foreach (RentOrder order in AllOrders)
+            foreach (RentOrder order in _rentOrderRepository.ReadAllRentOrders())
             {
-                totalPrice += order.Car.RentPrice * order.RentDuration;
+                totalPrice += order.RentPrice;
             }
             return totalPrice;
+        }
+
+        public List<RentOrder> ReadAllRentOrders()
+        {
+            return _rentOrderRepository.ReadAllRentOrders();
+        }
+
+        public void WriteOneRentOrder(RentOrder rentOrder)
+        {
+            _rentOrderRepository.WriteOneRentOrder(rentOrder);
         }
     }
 }

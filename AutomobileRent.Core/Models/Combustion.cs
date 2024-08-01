@@ -19,6 +19,17 @@ namespace AutomobileRent.Core.Models
             FuelConsumption = fuelConsumption;
         }
 
+        public Combustion(string maker, string model, decimal rentPrice, decimal fuelConsumption) : base(maker, model, rentPrice)
+        {
+            Maker = maker;
+            Model = model;
+            RentPrice = rentPrice;
+            FuelConsumption = fuelConsumption;
+        }
+
+
+        public Combustion() { }
+
         public override string ToString()
         {
             return $"Id: {Id}; Maker: {Maker}; Model: {Model}; Rent price: {RentPrice} Eur/day; Fuel consumption: {FuelConsumption} l/100km";
