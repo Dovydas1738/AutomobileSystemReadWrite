@@ -87,5 +87,25 @@ namespace AutomobileRent.Core.Services
         {
             _carsRepository.WriteOneCombustion(combustion);
         }
+
+        public Electric GetElectricCarById(int id)
+        {
+            return _carsRepository.GetElectricCarById(id);
+        }
+
+        public Combustion GetCombustionCarById(int id)
+        {
+            return _carsRepository.GetCombustionCarById(id);
+        }
+
+        public void RenewElectric(Electric electric)
+        {
+            _carsRepository.RenewElectric(electric);
+        }
+
+        public void RenewCombustion(Combustion combustion)
+        {
+            _carsRepository.RenewCombustion(combustion);
+        }
     }
 }

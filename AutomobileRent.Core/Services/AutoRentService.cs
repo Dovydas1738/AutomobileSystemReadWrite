@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutomobileRent.Core.Services;
 using AutomobileRent.Core.Contracts;
 using AutomobileRent.Core.Models;
+using AutomobileRent.Core.Repositories;
 
 namespace AutomobileRent.Core.Services
 {
@@ -72,5 +73,24 @@ namespace AutomobileRent.Core.Services
             _rentService.WriteOneRentOrder(rentOrder);
         }
 
+        public Car GetElectricCarById(int id)
+        {
+           return _carsService.GetElectricCarById(id);
+        }
+
+        public Car GetCombustionCarById(int id)
+        {
+            return _carsService.GetCombustionCarById(id);
+        }
+
+        public void RenewElectric(Electric electric)
+        {
+            _carsService.RenewElectric(electric);
+        }
+
+        public void RenewCombustion(Combustion combustion)
+        {
+            _carsService.RenewCombustion(combustion);
+        }
     }
 }

@@ -16,5 +16,9 @@ namespace AutomobileRent.Core.Contracts
         List<Combustion> ReadAllCombustion();
         void WriteOneElectric(Electric electric);
         void WriteOneCombustion(Combustion combustion);
+        Electric GetElectricCarById(int id);
+        Combustion GetCombustionCarById(int id);
+        void RenewElectric(Electric electric);
+        void RenewCombustion(Combustion combustion);
     }
 }

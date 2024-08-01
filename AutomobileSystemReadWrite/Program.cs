@@ -33,12 +33,13 @@ namespace MyProgram
             Console.WriteLine("5. Make an order");
             Console.WriteLine("6. See customer's orders");
             Console.WriteLine("7. Get total price of all orders");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("8. Renew car data");
+            Console.WriteLine("9. Exit");
 
 
             string choice2 = Console.ReadLine();
 
-            while (choice2 != "8")
+            while (choice2 != "9")
             {
 
                 switch (choice2)
@@ -88,9 +89,6 @@ namespace MyProgram
 
                     case "3":
 
-                        //Console.WriteLine("Enter car Id");
-                        //int newId = int.Parse(Console.ReadLine());
-
                         Console.WriteLine("Enter car Maker");
                         string newMaker = Console.ReadLine();
 
@@ -119,7 +117,7 @@ namespace MyProgram
                         }
                         else if (choice == "c")
                         {
-                            Console.WriteLine("Enter Fuel Consumption (0.00 format)");
+                            Console.WriteLine("Enter Fuel Consumption");
                             decimal newFuelConsumption = decimal.Parse(Console.ReadLine());
 
                             Combustion newCar = new Combustion(newMaker, newModel, newRentPrice, newFuelConsumption);
@@ -187,26 +185,18 @@ namespace MyProgram
                             Console.WriteLine("Customer's surname");
                             surname = Console.ReadLine();
 
-                            //_customersService.SearchByNameSurname(name, surname);
 
                             Customer orderingCustomer = _customersService.SearchByNameSurname(name, surname)[0];
 
+                            Console.WriteLine("Electric or combustion? (type Electric/Combustion)");
+                            string carType = Console.ReadLine();
 
-                            Console.WriteLine("Which car would the customer like to rent? (enter maker)");
-                            string toChooseCar = Console.ReadLine();
-
-
-
-                            if (_carsService.SearchByMaker(toChooseCar)[0] != null)
+                            if (carType == "Electric")
                             {
-                                Car chosenCar = _carsService.SearchByMaker(toChooseCar)[0];
+                                Console.WriteLine("Which car would the customer like to rent? (enter Id)");
+                                int toChooseCarId = int.Parse(Console.ReadLine());
 
-                                string carType = "Combustion";
-
-                                if(chosenCar is Electric)
-                                {
-                                    carType = "Electric";
-                                }
+                                Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId);
 
                                 Console.WriteLine("Enter rent duration (days)");
                                 int duration = int.Parse(Console.ReadLine());
@@ -220,6 +210,31 @@ namespace MyProgram
                                 Console.WriteLine($"Rental ends: {newOrder.GetRentEndDate()}");
 
                             }
+
+                            else if (carType == "Combustion")
+                            {
+                                Console.WriteLine("Which car would the customer like to rent? (enter Id)");
+                                int toChooseCarId = int.Parse(Console.ReadLine());
+
+                                Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId);
+
+                                Console.WriteLine("Enter rent duration (days)");
+                                int duration = int.Parse(Console.ReadLine());
+
+                                RentOrder newOrder = new RentOrder(orderingCustomer, chosenCar, carType, DateTime.Now, duration);
+
+                                _autoRentService.AddOneRentOrder(newOrder);
+
+                                Console.WriteLine("Order was successful!");
+                                Console.WriteLine($"Price: {newOrder.CountRentPrice()}");
+                                Console.WriteLine($"Rental ends: {newOrder.GetRentEndDate()}");
+                            }
+
+                            else
+                            {
+                                Console.WriteLine("Something went wrong");
+                            }
+
                         }
                         catch (Exception ex)
                         {
@@ -286,6 +301,110 @@ namespace MyProgram
 
                         break;
 
+                    case "8":
+
+                        Console.WriteLine("Electric or combustion? (type e/c)");
+                        string thisCaseChoice = Console.ReadLine();
+
+                        if (thisCaseChoice == "e")
+                        {
+                            Console.WriteLine("Which car do you want to edit? (enter Id)");
+                            int toChooseCarId = int.Parse(Console.ReadLine());
+
+                            Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId);
+
+                            Console.WriteLine("Enter car Maker (enter to skip)");
+                            string makerChoice = Console.ReadLine();
+
+                            if(makerChoice != "")
+                            {
+                                chosenCar.Maker = makerChoice;
+                            }
+
+                            Console.WriteLine("Enter car Model (enter to skip)");
+                            string modelChoice = Console.ReadLine();
+
+                            if (modelChoice != "")
+                            {
+                                chosenCar.Model = modelChoice;
+                            }
+
+                            Console.WriteLine("Enter Rent Price (enter to skip)");
+
+                            if (decimal.TryParse(Console.ReadLine(), out decimal rentPriceChoice))
+                            {
+                                chosenCar.RentPrice = rentPriceChoice;
+                            }
+
+                            Console.WriteLine("Enter Battery capacity (enter to skip)");
+
+                            if (int.TryParse(Console.ReadLine(), out int batteryCapacityChoice))
+                            {
+                                ((Electric)chosenCar).BatteryCapacity = batteryCapacityChoice;
+                            }
+
+
+                            Console.WriteLine("Enter Charge time (enter to skip)");
+
+                            if (int.TryParse(Console.ReadLine(), out int chargeTimeChoice))
+                            {
+                                ((Electric)chosenCar).ChargeTime = chargeTimeChoice;
+                            }
+
+                            _autoRentService.RenewElectric((Electric)chosenCar);
+
+                            Console.WriteLine("Car info renewed successfully!");
+                        }
+
+                        else
+                        {
+                            Console.WriteLine("Which car do you want to edit? (enter Id)");
+                            int toChooseCarId = int.Parse(Console.ReadLine());
+
+                            Car chosenCar = _autoRentService.GetCombustionCarById(toChooseCarId);
+
+                            Console.WriteLine("Enter car Maker (enter to skip)");
+                            string makerChoice = Console.ReadLine();
+
+                            if (makerChoice != "")
+                            {
+                                chosenCar.Maker = makerChoice;
+                            }
+
+                            Console.WriteLine("Enter car Model (enter to skip)");
+                            string modelChoice = Console.ReadLine();
+
+                            if (modelChoice != "")
+                            {
+                                chosenCar.Model = modelChoice;
+                            }
+
+                            Console.WriteLine("Enter Rent Price (enter to skip)");
+
+                            if (decimal.TryParse(Console.ReadLine(), out decimal rentPriceChoice))
+                            {
+                                chosenCar.RentPrice = rentPriceChoice;
+                            }
+
+                            Console.WriteLine("Enter Fuel Consumption 0.0 format (enter to skip)");
+
+                            if (decimal.TryParse(Console.ReadLine(), out decimal fuelConsumptionChoice))
+                            {
+                                ((Combustion)chosenCar).FuelConsumption = fuelConsumptionChoice;
+                            }
+
+
+                            _autoRentService.RenewCombustion((Combustion)chosenCar);
+
+                            Console.WriteLine("Car info renewed successfully!");
+
+                        }
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
                     //case "9":
 
                     //    Console.WriteLine("All available electric cars: ");
@@ -337,7 +456,8 @@ namespace MyProgram
             Console.WriteLine("5. Make an order");
             Console.WriteLine("6. See customer's orders");
             Console.WriteLine("7. Get total price of all orders");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("8. Renew car data");
+            Console.WriteLine("9. Exit");
 
         }
 

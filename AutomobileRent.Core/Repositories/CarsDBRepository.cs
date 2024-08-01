@@ -67,6 +67,60 @@ namespace AutomobileRent.Core.Repositories
 
         }
 
+
+
+        public Electric GetElectricCarById(int id)
+        {
+            using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
+            dbConnection.Open();
+            Electric result = dbConnection.QueryFirst<Electric>(@"SELECT * FROM [dbo].[Elektromobiliai] WHERE Id = @Id", new {Id=id});
+            dbConnection.Close();
+            return result;
+
+        }
+
+        public Combustion GetCombustionCarById(int id)
+        {
+            using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
+            dbConnection.Open();
+            Combustion result = dbConnection.QueryFirst<Combustion>(@"SELECT * FROM [dbo].[NaftosKuroAutomobiliai] WHERE Id = @Id", new {Id=id});
+            dbConnection.Close();
+            return result;
+
+        }
+
+        public void RenewElectric(Electric electric)
+        {
+            string sqlCommand = @"UPDATE [Elektromobiliai]
+            SET [Maker] = @Maker
+            ,[Model] = @Model
+            ,[RentPrice] = @RentPrice
+            ,[BatteryCapacity] = @BatteryCapacity
+            ,[ChargeTime] = @ChargeTime
+            WHERE Id = @Id";
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, electric);
+            }
+        }
+
+        public void RenewCombustion(Combustion combustion)
+        {
+            string sqlCommand = @"UPDATE [NaftosKuroAutomobiliai]
+            SET [Maker] = @Maker
+            ,[Model] = @Model
+            ,[RentPrice] = @RentPrice
+            ,[FuelConsumption] = @FuelConsumption
+            WHERE Id = @Id";
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, combustion);
+            }
+        }
+
+
         public void WriteCars(List<Car> cars)
         {
             throw new NotImplementedException();
