@@ -30,6 +30,11 @@ namespace AutomobileRent.Core.Services
             return _customersRepository.ReadCustomers();
         }
 
+        public Customer GetCustomerById(int id)
+        {
+            return _customersRepository.GetCustomerById(id);
+        }
+
         public List<Customer> ReadCustomersDB()
         {
             return _customersRepository.ReadCustomersDB();
@@ -38,6 +43,11 @@ namespace AutomobileRent.Core.Services
         public void ReadFromFile()
         {
             _customersRepository.ReadCustomers();
+        }
+
+        public void RenewCustomer(Customer customer)
+        {
+            _customersRepository.RenewCustomer(customer);
         }
 
         public List<Customer> SearchByNameSurname(string name, string surname)

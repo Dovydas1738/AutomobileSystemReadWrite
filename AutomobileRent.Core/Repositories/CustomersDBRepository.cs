@@ -23,7 +23,7 @@ namespace AutomobileRent.Core.Repositories
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            List<Customer> result = dbConnection.Query<Customer>(@"SELECT [Id] AS CustomerId, [Name], [Surname], [BirthDate] FROM [dbo].[Klientai]").ToList();
+            List<Customer> result = dbConnection.Query<Customer>(@"SELECT Id AS CustomerId, Name, Surname, BirthDate FROM dbo.Klientai").ToList();
             dbConnection.Close();
             return result;
         }
@@ -37,6 +37,31 @@ namespace AutomobileRent.Core.Repositories
             {
                 connection.Execute(sqlCommand, customer);
             }
+        }
+
+        public Customer GetCustomerById(int id)
+        {
+            using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
+            dbConnection.Open();
+            Customer result = dbConnection.QueryFirst<Customer>(@"SELECT Id AS CustomerId, Name, Surname, BirthDate FROM [dbo].[Klientai] WHERE Id = @Id", new { Id = id });
+            dbConnection.Close();
+            return result;
+
+        }
+
+        public void RenewCustomer(Customer customer)
+        {
+            string sqlCommand = @"UPDATE [Klientai]
+            SET [Name] = @Name
+            ,[Surname] = @Surname
+            ,[BirthDate] = @BirthDate
+             WHERE Id = @CustomerId";
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, customer);
+            }
+
         }
 
         public List<Customer> ReadCustomers()

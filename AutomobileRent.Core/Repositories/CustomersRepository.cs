@@ -17,6 +17,10 @@ namespace AutomobileRent.Core.Repositories
         _filePath = customerFilePath; 
         }
 
+        public Customer GetCustomerById(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         public List<Customer> ReadCustomers()
         {
@@ -36,6 +40,11 @@ namespace AutomobileRent.Core.Repositories
         }
 
         public List<Customer> ReadCustomersDB()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RenewCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }

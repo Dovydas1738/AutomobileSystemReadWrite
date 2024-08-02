@@ -21,6 +21,7 @@ namespace AutomobileRent.Core.Models
             Name = name;
             Surname = surname;
             BirthDate = birthDate;
+            CustomerId = CustomerId;
         }
 
         //public Customer(int customerId, string name, string surname, DateTime birthDate)
@@ -36,7 +37,7 @@ namespace AutomobileRent.Core.Models
 
         public override string ToString()
         {
-            return $"{Name} {Surname} {BirthDate}";
+            return $"Id:{CustomerId} {Name} {Surname} {BirthDate.ToString()}";
         }
 
 

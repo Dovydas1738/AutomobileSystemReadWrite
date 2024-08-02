@@ -50,7 +50,44 @@ namespace AutomobileRent.Core.Repositories
             }
         }
 
+        public RentOrder GetRentOrderById(int id)
+        {
+            using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
+            dbConnection.Open();
+            RentOrder result = dbConnection.QueryFirst<RentOrder>(@"SELECT * FROM [dbo].[NuomosUzsakymai] WHERE Id = @Id", new { Id = id });
+            dbConnection.Close();
+            return result;
 
+        }
+
+        public void RenewRentOrder(RentOrder rentOrder)
+        {
+            string sqlCommand = @"UPDATE [NuomosUzsakymai]
+            SET [Customer] = @Customer
+            ,[Car_id] = @Car_id
+            ,[Type] = @Type
+            ,[RentStart] = @RentStart
+            ,[RentDuration] = @RentDuration
+            ,[RentPrice] = @RentPrice
+             WHERE Id = @Id";
+
+            var parameters = new
+            {
+                Customer = rentOrder.Customer.CustomerId,
+                Car_id = rentOrder.Car.Id,
+                Type = rentOrder.Type,
+                RentStart = rentOrder.RentStart,
+                RentDuration = rentOrder.RentDuration,
+                RentPrice = rentOrder.RentPrice,
+            };
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, parameters);
+            }
+
+
+        }
 
 
     }

@@ -92,5 +92,26 @@ namespace AutomobileRent.Core.Services
         {
             _carsService.RenewCombustion(combustion);
         }
+
+        public Customer GetCustomerById(int id)
+        {
+            return _customersService.GetCustomerById(id);
+        }
+
+        public void RenewCustomer(Customer customer)
+        {
+            _customersService.RenewCustomer(customer);
+        }
+
+        public RentOrder GetOrderById(int id)
+        {
+            return _rentService.GetRentOrderById(id);
+        }
+
+        public void RenewRentOrder(RentOrder rentOrder)
+        {
+            _rentService.RenewRentOrder(rentOrder);
+        }
+
     }
 }

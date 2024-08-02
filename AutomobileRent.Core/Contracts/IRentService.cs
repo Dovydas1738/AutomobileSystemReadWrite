@@ -15,5 +15,7 @@ namespace AutomobileRent.Core.Contracts
         List<RentOrder> GetOrdersByCustomer(Customer customer);
         List<RentOrder> ReadAllRentOrders();
         void WriteOneRentOrder(RentOrder rentOrder);
+        RentOrder GetRentOrderById(int id);
+        void RenewRentOrder(RentOrder rentOrder);
      }
 }

@@ -70,5 +70,15 @@ namespace AutomobileRent.Core.Services
         {
             _rentOrderRepository.WriteOneRentOrder(rentOrder);
         }
+
+        public RentOrder GetRentOrderById(int id)
+        {
+            return _rentOrderRepository.GetRentOrderById(id);
+        }
+
+        public void RenewRentOrder(RentOrder rentOrder)
+        {
+            _rentOrderRepository.RenewRentOrder(rentOrder);
+        }
     }
 }
