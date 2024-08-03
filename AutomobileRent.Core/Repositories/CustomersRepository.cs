@@ -17,6 +17,11 @@ namespace AutomobileRent.Core.Repositories
         _filePath = customerFilePath; 
         }
 
+        public void DeleteCustomerById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Customer GetCustomerById(int id)
         {
             throw new NotImplementedException();

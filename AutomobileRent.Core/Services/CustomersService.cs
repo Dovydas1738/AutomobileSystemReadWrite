@@ -25,6 +25,11 @@ namespace AutomobileRent.Core.Services
             _customersRepository.WriteOneCustomer(customer);
         }
 
+        public void DeleteCustomerById(int id)
+        {
+            _customersRepository.DeleteCustomerById(id);
+        }
+
         public List<Customer> GetAllCustomers()
         {
             return _customersRepository.ReadCustomers();

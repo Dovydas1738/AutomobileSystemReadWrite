@@ -107,5 +107,17 @@ namespace AutomobileRent.Core.Services
         {
             _carsRepository.RenewCombustion(combustion);
         }
+
+        public void DeleteElectricCarById(int id)
+        {
+            _carsRepository.DeleteElectricById(id);
+        }
+
+        public void DeleteCombustionCarById(int id)
+        {
+            _carsRepository.DeleteCombustionById(id);
+        }
+
+
     }
 }

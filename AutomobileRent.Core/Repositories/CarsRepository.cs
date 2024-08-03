@@ -19,6 +19,16 @@ namespace AutomobileRent.Core.Repositories
             _filePath = carsFilePath;
         }
 
+        public void DeleteCombustionById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteElectricById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Combustion GetCombustionCarById(int id)
         {
             throw new NotImplementedException();

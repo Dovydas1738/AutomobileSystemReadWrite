@@ -113,5 +113,25 @@ namespace AutomobileRent.Core.Services
             _rentService.RenewRentOrder(rentOrder);
         }
 
+        public void DeleteCustomerById(int id)
+        {
+            _customersService.DeleteCustomerById(id);
+        }
+
+        public void DeleteElectricCarById(int id)
+        {
+            _carsService.DeleteElectricCarById(id);
+        }
+
+        public void DeleteCombustionCarById(int id)
+        {
+            _carsService.DeleteCombustionCarById(id);
+        }
+
+        public void DeleteRentOrderById(int id)
+        {
+            _rentService.DeleteRentOrderById(id);
+        }
+
     }
 }

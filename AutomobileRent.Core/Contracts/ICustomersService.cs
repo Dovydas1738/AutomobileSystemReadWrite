@@ -18,5 +18,6 @@ namespace AutomobileRent.Core.Contracts
         void WriteCustomerDB(Customer customer);
         Customer GetCustomerById(int id);
         void RenewCustomer(Customer customer);
+        void DeleteCustomerById(int id);
     }
 }

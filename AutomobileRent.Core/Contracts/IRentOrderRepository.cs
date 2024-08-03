@@ -15,5 +15,6 @@ namespace AutomobileRent.Core.Contracts
         void WriteOneRentOrder(RentOrder rentOrder);
         void RenewRentOrder(RentOrder rentOrder);
         RentOrder GetRentOrderById(int id);
+        void DeleteRentOrderById(int id);
     }
 }

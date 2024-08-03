@@ -120,6 +120,36 @@ namespace AutomobileRent.Core.Repositories
             }
         }
 
+        public void DeleteElectricById(int id)
+        {
+            string sqlCommand = "DELETE FROM Elektromobiliai WHERE Id = @id";
+
+            var parameters = new
+            {
+                id = id
+            };
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, parameters);
+            }
+        }
+
+        public void DeleteCombustionById(int id)
+        {
+            string sqlCommand = "DELETE FROM NaftosKuroAutomobiliai WHERE Id = @id";
+
+            var parameters = new
+            {
+                id = id
+            };
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, parameters);
+            }
+        }
+
 
         public void WriteCars(List<Car> cars)
         {

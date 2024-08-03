@@ -22,5 +22,7 @@ namespace AutomobileRent.Core.Contracts
         Combustion GetCombustionCarById(int id);
         void RenewElectric(Electric electric);
         void RenewCombustion(Combustion combustion);
+        void DeleteElectricCarById(int id);
+        void DeleteCombustionCarById(int id);
     }
 }

@@ -64,6 +64,21 @@ namespace AutomobileRent.Core.Repositories
 
         }
 
+        public void DeleteCustomerById(int id)
+        {
+            string sqlCommand = "DELETE FROM Klientai WHERE Id = @id";
+
+            var parameters = new
+            {
+                id = id
+            };
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, parameters);
+            }
+        }
+
         public List<Customer> ReadCustomers()
         {
             throw new NotImplementedException();

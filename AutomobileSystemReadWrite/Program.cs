@@ -35,13 +35,17 @@ namespace MyProgram
             Console.WriteLine("7. Get total price of all orders");
             Console.WriteLine("8. Renew car data");
             Console.WriteLine("9. Renew customer data");
-            Console.WriteLine("10. Renew rent order data");
-            Console.WriteLine("11. Exit");
+            Console.WriteLine("10. Renew rent order data"); //bugova biski nzn kodel
+            Console.WriteLine("11. See all rent orders");
+            Console.WriteLine("12. Delete a customer");
+            Console.WriteLine("13. Delete a car");
+            Console.WriteLine("14. Delete an order");
+            Console.WriteLine("15. Exit");
 
 
             string choice2 = Console.ReadLine();
 
-            while (choice2 != "11")
+            while (choice2 != "15")
             {
 
                 switch (choice2)
@@ -478,7 +482,7 @@ namespace MyProgram
 
                             RentOrder chosenRentOrder = _autoRentService.GetOrderById(toChooseRentOrderId);
 
-                            Console.WriteLine("Enter ordering customer's Id (enter to skip)");
+                            Console.WriteLine("Enter ordering customer's Id (skippas neveikia :( ))");
 
                             if (int.TryParse(Console.ReadLine(), out int customerIdChoice))
                             {
@@ -490,35 +494,126 @@ namespace MyProgram
 
                             if (carChoice == "e")
                             {
-                                Console.WriteLine("Enter electric car Id");
+                                Console.WriteLine("Enter electric car Id (skippas neveikia :( )");
 
                                 if (int.TryParse(Console.ReadLine(), out int customerCarIdChoice))
                                 {
-                                    chosenRentOrder.Car = _autoRentService.GetElectricCarById(customerIdChoice);
-                                    chosenRentOrder.Type = "Electric";/////////////////// CIA BAIGTI
+                                    chosenRentOrder.Car = _autoRentService.GetElectricCarById(customerCarIdChoice);
+                                    chosenRentOrder.Type = "Electric";
                                 }
+
 
                             }
                             else if(carChoice == "c")
                             {
-                                Console.WriteLine("Enter combustion car Id");
+                                Console.WriteLine("Enter combustion car Id (skippas neveikia :( )");
 
                                 if (int.TryParse(Console.ReadLine(), out int customerCarIdChoice))
                                 {
-                                    chosenRentOrder.Car = _autoRentService.GetCombustionCarById(customerIdChoice);
+                                    chosenRentOrder.Car = _autoRentService.GetCombustionCarById(customerCarIdChoice);
+                                    chosenRentOrder.Type = "Combustion";
                                 }
 
                             }
-                            else
+
+                            Console.WriteLine("Enter new rental start time (enter to skip)");
+                            if(DateTime.TryParse(Console.ReadLine(), out DateTime newRentStart))
                             {
-                                Console.WriteLine("Wrong input");
+                                chosenRentOrder.RentStart = newRentStart;
                             }
+
+                            Console.WriteLine("Enter new rental duration (enter to skip)");
+                            if (int.TryParse(Console.ReadLine(), out int newRentDuration))
+                            {
+                                chosenRentOrder.RentDuration = newRentDuration;
+                            }
+
+                            _autoRentService.RenewRentOrder(chosenRentOrder);
+                            Console.WriteLine("Rent order data successfully updated!");
 
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine("Something went wrong");
                         }
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
+                    case "11":
+
+                        foreach (RentOrder a in _autoRentService.GetAllRentOrders())
+                        {
+                            Console.WriteLine(a);
+                        }
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
+                    case "12":
+
+                        Console.WriteLine("Enter customer's Id that you want to delete");
+                        int deletionId = int.Parse(Console.ReadLine());
+
+                        _autoRentService.DeleteCustomerById(deletionId);
+
+                        Console.WriteLine("Customer deleted successfully!");
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
+                    case "13":
+
+                        Console.WriteLine("Delete electric or combustion? (e/c)");
+                        string choiceCarDelete = Console.ReadLine();
+
+                        if(choiceCarDelete == "e")
+                        {
+                            Console.WriteLine("Enter car id you want to delete");
+                            int deleteId = int.Parse(Console.ReadLine());
+
+                            _autoRentService.DeleteElectricCarById(deleteId);
+
+                            Console.WriteLine("Car deleted successfully!");
+                        }
+                        else if (choiceCarDelete == "c")
+                        {
+                            Console.WriteLine("Enter car id you want to delete");
+                            int deleteId = int.Parse(Console.ReadLine());
+
+                            _autoRentService.DeleteCombustionCarById(deleteId);
+
+                            Console.WriteLine("Car deleted successfully!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong input");
+                        }
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
+                    case "14":
+
+
+                        Console.WriteLine("Enter rent order Id that you want to delete");
+                        int orderDeletionId = int.Parse(Console.ReadLine());
+
+                        _autoRentService.DeleteRentOrderById(orderDeletionId);
+
+                        Console.WriteLine("Order deleted successfully!");
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
 
                         break;
 
@@ -576,7 +671,11 @@ namespace MyProgram
             Console.WriteLine("8. Renew car data");
             Console.WriteLine("9. Renew customer data");
             Console.WriteLine("10. Renew rent order data");
-            Console.WriteLine("11. Exit");
+            Console.WriteLine("11. See all rent orders");
+            Console.WriteLine("12. Delete a customer");
+            Console.WriteLine("13. Delete a car");
+            Console.WriteLine("14. Delete an order");
+            Console.WriteLine("15. Exit");
 
         }
 

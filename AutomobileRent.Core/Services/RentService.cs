@@ -80,5 +80,9 @@ namespace AutomobileRent.Core.Services
         {
             _rentOrderRepository.RenewRentOrder(rentOrder);
         }
+        public void DeleteRentOrderById(int id)
+        {
+            _rentOrderRepository.DeleteRentOrderById(id);
+        }
     }
 }
