@@ -23,15 +23,15 @@ namespace AutomobileRent.Core.Repositories
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            List<RentOrder> result = dbConnection.Query<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice] FROM [dbo].[NuomosUzsakymai]").ToList();
+            List<RentOrder> result = dbConnection.Query<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM [dbo].[NuomosUzsakymai]").ToList();
             dbConnection.Close();
             return result;
         }
 
         public void WriteOneRentOrder(RentOrder rentOrder)
         {
-            string sqlCommand = "INSERT INTO NuomosUzsakymai ([Customer],[Car_id],[Type],[RentStart],[RentDuration],[RentPrice]) VALUES " +
-            "(@Customer, @Car_id, @Type, @RentStart, @RentDuration, @RentPrice)";
+            string sqlCommand = "INSERT INTO NuomosUzsakymai ([Customer],[Car_id],[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId]) VALUES " +
+            "(@Customer, @Car_id, @Type, @RentStart, @RentDuration, @RentPrice, @WorkerId)";
 
             var parameters = new
             {
@@ -41,6 +41,7 @@ namespace AutomobileRent.Core.Repositories
                 RentStart = rentOrder.RentStart,
                 RentDuration = rentOrder.RentDuration,
                 RentPrice = rentOrder.RentPrice,
+                WorkerId = rentOrder.Worker.Id,
             };
 
 
@@ -54,7 +55,7 @@ namespace AutomobileRent.Core.Repositories
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            RentOrder result = dbConnection.QueryFirst<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice] FROM [dbo].[NuomosUzsakymai] WHERE [Id] = @Id", new { Id = id });
+            RentOrder result = dbConnection.QueryFirst<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM [dbo].[NuomosUzsakymai] WHERE [Id] = @Id", new { Id = id });
             dbConnection.Close();
             return result;
 

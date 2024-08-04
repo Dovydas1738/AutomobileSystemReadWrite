@@ -10,6 +10,8 @@ namespace MyProgram
     {
         public static void Main(string[] args)
         {
+            IWorkerDBRepository _workerRepository = new WorkerDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;");
+            IWorkerService _workerService = new WorkerService(_workerRepository);
             IRentOrderRepository _rentOrderRepository = new RentOrderDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;");
             IRentService _rentService = new RentService(_rentOrderRepository);
             //ICarsRepository _carsRepository = new CarsRepository("C:\\Users\\dovis\\source\\repos\\AutomobileSystemReadWrite\\AutomobileRent.Core\\Repositories\\CarsData.txt");
@@ -40,12 +42,13 @@ namespace MyProgram
             Console.WriteLine("12. Delete a customer");
             Console.WriteLine("13. Delete a car");
             Console.WriteLine("14. Delete an order");
-            Console.WriteLine("15. Exit");
+            Console.WriteLine("15. See all workers");
+            Console.WriteLine("16. Exit");
 
 
             string choice2 = Console.ReadLine();
 
-            while (choice2 != "15")
+            while (choice2 != "16")
             {
 
                 switch (choice2)
@@ -186,6 +189,11 @@ namespace MyProgram
 
                         try
                         {
+                            Console.WriteLine("Enter your worker Id");
+                            int workerId = int.Parse(Console.ReadLine());
+
+                            Worker servingWorker = _workerService.GetWorkerById(workerId);
+
                             Console.WriteLine("Customer's name");
                             name = Console.ReadLine();
                             Console.WriteLine("Customer's surname");
@@ -207,7 +215,7 @@ namespace MyProgram
                                 Console.WriteLine("Enter rent duration (days)");
                                 int duration = int.Parse(Console.ReadLine());
 
-                                RentOrder newOrder = new RentOrder(orderingCustomer, chosenCar, carType, DateTime.Now, duration);
+                                RentOrder newOrder = new RentOrder(orderingCustomer, chosenCar, carType, DateTime.Now, duration, servingWorker);
 
                                 _autoRentService.AddOneRentOrder(newOrder);
 
@@ -227,7 +235,7 @@ namespace MyProgram
                                 Console.WriteLine("Enter rent duration (days)");
                                 int duration = int.Parse(Console.ReadLine());
 
-                                RentOrder newOrder = new RentOrder(orderingCustomer, chosenCar, carType, DateTime.Now, duration);
+                                RentOrder newOrder = new RentOrder(orderingCustomer, chosenCar, carType, DateTime.Now, duration, servingWorker);
 
                                 _autoRentService.AddOneRentOrder(newOrder);
 
@@ -617,39 +625,18 @@ namespace MyProgram
 
                         break;
 
-                    //case "9":
+                    case "15":
 
-                    //    Console.WriteLine("All available electric cars: ");
-                    //    List<Electric> allElectricCars = _autoRentService.GetAllElectric();
+                        foreach (Worker a in _workerService.ReadWorkersDB())
+                        {
+                            Console.WriteLine(a);
+                        }
 
-                    //    foreach (Car car in allElectricCars)
-                    //    {
-                    //        Console.WriteLine(car);
-                    //    }
+                        GetMenu();
+                        choice2 = Console.ReadLine();
 
-                    //    GetMenu();
+                        break;
 
-                    //    choice2 = Console.ReadLine();
-
-
-                    //    break;
-
-                    //case "10":
-
-                    //    Console.WriteLine("All available combustion cars: ");
-                    //    List<Combustion> allCombustionCars = _autoRentService.GetAllCombustion();
-
-                    //    foreach (Car car in allCombustionCars)
-                    //    {
-                    //        Console.WriteLine(car);
-                    //    }
-
-                    //    GetMenu();
-
-                    //    choice2 = Console.ReadLine();
-
-
-                    //    break;
                 }
 
             }
@@ -675,8 +662,8 @@ namespace MyProgram
             Console.WriteLine("12. Delete a customer");
             Console.WriteLine("13. Delete a car");
             Console.WriteLine("14. Delete an order");
-            Console.WriteLine("15. Exit");
-
+            Console.WriteLine("15. See all workers");
+            Console.WriteLine("16. Exit");
         }
 
 

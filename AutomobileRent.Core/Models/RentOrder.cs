@@ -22,10 +22,12 @@ namespace AutomobileRent.Core.Models
         public int CustomerId { get; set; }
         public decimal RentPrice { get; set; }
         public int Id { get; set; }
+        public Worker Worker { get; set; }
+        public int WorkerId { get; set; }
 
 
 
-        public RentOrder(Customer customer, Car car, string type, DateTime rentStart, int rentDuration)
+        public RentOrder(Customer customer, Car car, string type, DateTime rentStart, int rentDuration, Worker worker)
         {
             Customer = customer;
             Car = car;
@@ -34,6 +36,7 @@ namespace AutomobileRent.Core.Models
             RentDuration = rentDuration;
             RentPrice = CountRentPrice();
             Id = Id;
+            Worker = worker;
         }
 
         //public RentOrder(Customer customer, Car car, string type, DateTime rentStart, int rentDuration)
@@ -70,7 +73,7 @@ namespace AutomobileRent.Core.Models
         }
         public override string ToString()
         {
-            return $"Rent order Id: {Id} Customer id: {CustomerId}, Car id: {CarId}, rent start: {RentStart}, duration: {RentDuration}";
+            return $"Rent order Id: {Id} Customer id: {CustomerId}, Car id: {CarId}, rent start: {RentStart}, duration: {RentDuration}, Worker Id: {WorkerId}";
         }
 
 
