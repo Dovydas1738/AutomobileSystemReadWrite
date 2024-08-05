@@ -37,7 +37,7 @@ namespace AutomobileRent.Core.Models
 
         public override string ToString()
         {
-            return $"Id:{CustomerId} {Name} {Surname} {BirthDate.ToString()}";
+            return $"Id:{CustomerId} {Name} {Surname} {BirthDate.ToShortDateString()}";
         }
 
 

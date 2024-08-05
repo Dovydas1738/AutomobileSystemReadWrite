@@ -16,6 +16,13 @@ namespace AutomobileRent.Core.Models
 
         public Worker() { }
 
+        public Worker (string name, string surname, WorkerPosition position)
+        {
+            Name = name;
+            Surname = surname;
+            Position = position;
+        }
+
 
         public decimal WorkerSalary(decimal baseSalary, int completedOrders)
         {

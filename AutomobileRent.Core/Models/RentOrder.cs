@@ -64,7 +64,7 @@ namespace AutomobileRent.Core.Models
 
         public decimal CountRentPrice()
         {
-            return Car.RentPrice * RentDuration;
+            return Math.Round(Car.RentPrice * RentDuration,2);
         }
 
         public DateTime GetRentEndDate()
@@ -73,7 +73,7 @@ namespace AutomobileRent.Core.Models
         }
         public override string ToString()
         {
-            return $"Rent order Id: {Id} Customer id: {CustomerId}, Car id: {CarId}, rent start: {RentStart}, duration: {RentDuration}, Worker Id: {WorkerId}";
+            return $"Rent order Id: {Id} Customer id: {CustomerId}, Car id: {CarId}, rent start: {RentStart.ToShortDateString()}, duration: {RentDuration}, Worker Id: {WorkerId}";
         }
 
 

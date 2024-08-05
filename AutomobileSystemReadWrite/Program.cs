@@ -3,6 +3,7 @@ using AutomobileRent.Core.Repositories;
 using AutomobileRent.Core.Services;
 using AutomobileRent.Core.Models;
 using System;
+using AutomobileRent.Core.Enums;
 
 namespace MyProgram
 {
@@ -37,19 +38,22 @@ namespace MyProgram
             Console.WriteLine("7. Get total price of all orders");
             Console.WriteLine("8. Renew car data");
             Console.WriteLine("9. Renew customer data");
-            Console.WriteLine("10. Renew rent order data"); //bugova biski nzn kodel
+            Console.WriteLine("10. Renew rent order data");
             Console.WriteLine("11. See all rent orders");
             Console.WriteLine("12. Delete a customer");
             Console.WriteLine("13. Delete a car");
             Console.WriteLine("14. Delete an order");
-            Console.WriteLine("15. See all workers");
-            Console.WriteLine("16. Pay out salary");
-            Console.WriteLine("17. Exit");
+            Console.WriteLine("15. Add a worker");
+            Console.WriteLine("16. Edit worker's data");
+            Console.WriteLine("17. Delete a worker");
+            Console.WriteLine("18. See all workers");
+            Console.WriteLine("19. Pay out a salary");
+            Console.WriteLine("20. Exit");
 
 
             string choice2 = Console.ReadLine();
 
-            while (choice2 != "17")
+            while (choice2 != "20")
             {
 
                 switch (choice2)
@@ -306,7 +310,7 @@ namespace MyProgram
                     case "7":
 
                         Console.WriteLine("Total price of all rentals:");
-                        Console.WriteLine(_rentService.GetTotalRentPrice());
+                        Console.WriteLine(Math.Round(_rentService.GetTotalRentPrice(),2));
 
                         GetMenu();
 
@@ -628,6 +632,79 @@ namespace MyProgram
 
                     case "15":
 
+                        Console.WriteLine("Enter new worker's name");
+                        string newWorkerName = Console.ReadLine();
+
+                        Console.WriteLine("Enter new worker's surname");
+                        string newWorkerSurname = Console.ReadLine();
+
+                        Console.WriteLine("Choose new worker's position:");
+                        Console.WriteLine("1-Director; 2-Manager; 3-Mechanic");
+
+                        WorkerPosition workerPosition = (WorkerPosition)int.Parse(Console.ReadLine());
+
+                        Worker newWorker = new Worker(newWorkerName,newWorkerSurname,workerPosition);
+                        _workerService.AddWorker(newWorker);
+
+                        Console.WriteLine("New worker added successfully!");
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
+                    case "16":
+
+                        Console.WriteLine("Which worker do you want to edit? (enter Id)");
+                        int toChooseWorkerId = int.Parse(Console.ReadLine());
+
+                        Worker chosenWorkerToEdit = _workerService.GetWorkerById(toChooseWorkerId);
+
+                        Console.WriteLine("Enter worker's name (enter to skip)");
+                        string workerNameChoice = Console.ReadLine();
+
+                        if (workerNameChoice != "")
+                        {
+                            chosenWorkerToEdit.Name = workerNameChoice;
+                        }
+
+                        Console.WriteLine("Enter worker's surname (enter to skip)");
+                        string workerSurnameChoice = Console.ReadLine();
+
+                        if (workerSurnameChoice != "")
+                        {
+                            chosenWorkerToEdit.Surname = workerSurnameChoice;
+                        }
+
+                        Console.WriteLine("Choose worker's position (enter to skip)");
+                        Console.WriteLine("1-Director; 2-Manager; 3-Mechanic");
+                        WorkerPosition positionChoice = (WorkerPosition)int.Parse(Console.ReadLine());
+
+                        chosenWorkerToEdit.Position = positionChoice;
+
+                        _workerService.RenewWorkerData(chosenWorkerToEdit);
+                        Console.WriteLine("Worker edited successfully!");
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
+                    case "17":
+
+                        Console.WriteLine("Enter worker Id you want to delete");
+                        int workerIdToDelete = int.Parse(Console.ReadLine());
+
+                        _workerService.DeleteWorkerById(workerIdToDelete);
+                        Console.WriteLine("Worker deleted successfully!");
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
+                    case "18":
+
                         foreach (Worker a in _workerService.ReadWorkersDB())
                         {
                             Console.WriteLine(a);
@@ -638,7 +715,7 @@ namespace MyProgram
 
                         break;
 
-                    case "16":
+                    case "19":
                         Console.WriteLine("Enter worker Id");
 
                         int workerIdForOrders = int.Parse(Console.ReadLine());
@@ -687,9 +764,12 @@ namespace MyProgram
             Console.WriteLine("12. Delete a customer");
             Console.WriteLine("13. Delete a car");
             Console.WriteLine("14. Delete an order");
-            Console.WriteLine("15. See all workers");
-            Console.WriteLine("16. Pay out salary");
-            Console.WriteLine("17. Exit");
+            Console.WriteLine("15. Add a worker");
+            Console.WriteLine("16. Edit worker's data");
+            Console.WriteLine("17. Delete a worker");
+            Console.WriteLine("18. See all workers");
+            Console.WriteLine("19. Pay out a salary");
+            Console.WriteLine("20. Exit");
         }
 
 

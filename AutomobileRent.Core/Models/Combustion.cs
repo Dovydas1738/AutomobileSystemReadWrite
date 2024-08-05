@@ -32,7 +32,7 @@ namespace AutomobileRent.Core.Models
 
         public override string ToString()
         {
-            return $"Id: {Id}; Maker: {Maker}; Model: {Model}; Rent price: {RentPrice} Eur/day; Fuel consumption: {FuelConsumption} l/100km";
+            return $"Id: {Id}; Maker: {Maker}; Model: {Model}; Rent price: {Math.Round(RentPrice,2)} Eur/day; Fuel consumption: {Math.Round(FuelConsumption,1)} l/100km";
         }
 
 

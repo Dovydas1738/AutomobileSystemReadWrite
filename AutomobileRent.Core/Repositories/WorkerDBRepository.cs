@@ -77,5 +77,47 @@ namespace AutomobileRent.Core.Repositories
             }
 
         }
+
+        public void AddWorker(Worker worker)
+        {
+            string sqlCommand = "INSERT INTO Darbuotojai ([Name], [Surname], [Position]) VALUES " +
+            "(@Name, @Surname, @Position)";
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, worker);
+            }
+
+        }
+
+        public void RenewWorkerData(Worker worker)
+        {
+            string sqlCommand = @"UPDATE [Darbuotojai]
+            SET [Name] = @Name
+            ,[Surname] = @Surname
+            ,[Position] = @Position
+             WHERE Id = @Id";
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, worker);
+            }
+        }
+
+        public void DeleteWorkerById(int workerId)
+        {
+            string sqlCommand = "DELETE FROM Darbuotojai WHERE Id = @id";
+
+            var parameters = new
+            {
+                id = workerId,
+            };
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, parameters);
+            }
+
+        }
     }
 }

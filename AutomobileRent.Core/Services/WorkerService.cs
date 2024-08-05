@@ -17,6 +17,16 @@ namespace AutomobileRent.Core.Services
             _workerRepository = workerRepository;
         }
 
+        public void AddWorker(Worker worker)
+        {
+            _workerRepository.AddWorker(worker);
+        }
+
+        public void DeleteWorkerById(int workerId)
+        {
+            _workerRepository.DeleteWorkerById(workerId);
+        }
+
         public decimal GetWorkerBaseSalary(int workerId)
         {
             return _workerRepository.GetWorkerBaseSalary(workerId);
@@ -40,6 +50,11 @@ namespace AutomobileRent.Core.Services
         public List<Worker> ReadWorkersDB()
         {
             return _workerRepository.ReadWorkersDB();
+        }
+
+        public void RenewWorkerData(Worker worker)
+        {
+            _workerRepository.RenewWorkerData(worker);
         }
     }
 }
