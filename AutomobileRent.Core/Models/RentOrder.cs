@@ -73,7 +73,7 @@ namespace AutomobileRent.Core.Models
         }
         public override string ToString()
         {
-            return $"Rent order Id: {Id} Customer id: {CustomerId}, Car id: {CarId}, rent start: {RentStart.ToShortDateString()}, duration: {RentDuration}, Worker Id: {WorkerId}";
+            return $"Rent order Id: {Id} Customer id: {CustomerId}, Car type: {Type}, Car id: {CarId}, rent start: {RentStart.ToShortDateString()}, duration: {RentDuration}, Worker Id: {WorkerId}";
         }
 
 

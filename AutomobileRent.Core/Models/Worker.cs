@@ -13,6 +13,7 @@ namespace AutomobileRent.Core.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public WorkerPosition Position { get; set; }
+        public decimal BaseSalary { get; set; }
 
         public Worker() { }
 
@@ -21,6 +22,14 @@ namespace AutomobileRent.Core.Models
             Name = name;
             Surname = surname;
             Position = position;
+        }
+
+        public Worker(string name, string surname, WorkerPosition position, decimal baseSalary)
+        {
+            Name = name;
+            Surname = surname;
+            Position = position;
+            BaseSalary = baseSalary;
         }
 
 
@@ -38,7 +47,7 @@ namespace AutomobileRent.Core.Models
 
         public override string ToString()
         {
-            return $"Woker Id: {Id}, {Name} {Surname}, Position: {Position}";
+            return $"Worker Id: {Id}, {Name} {Surname}, Position: {Position}";
         }
     }
 }

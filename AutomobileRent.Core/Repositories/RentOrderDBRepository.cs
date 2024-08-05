@@ -70,6 +70,7 @@ namespace AutomobileRent.Core.Repositories
             ,[RentStart] = @RentStart
             ,[RentDuration] = @RentDuration
             ,[RentPrice] = @RentPrice
+            ,[WorkerId] = @WorkerId
              WHERE Id = @Id";
 
             var parameters = new
@@ -80,7 +81,8 @@ namespace AutomobileRent.Core.Repositories
                 RentStart = rentOrder.RentStart,
                 RentDuration = rentOrder.RentDuration,
                 RentPrice = rentOrder.RentPrice,
-                Id = rentOrder.Id
+                Id = rentOrder.Id,
+                WorkerId = rentOrder.WorkerId,
             };
 
             using (var connection = new SqlConnection(_dbConnectionString))

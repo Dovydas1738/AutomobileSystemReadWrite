@@ -541,6 +541,13 @@ namespace MyProgram
                                 chosenRentOrder.RentDuration = newRentDuration;
                             }
 
+                            Console.WriteLine("Enter new worker Id (enter to skip)");
+                            if (int.TryParse(Console.ReadLine(), out int newWorkerId))
+                            {
+                                chosenRentOrder.WorkerId = newWorkerId;
+                            }
+
+
                             _autoRentService.RenewRentOrder(chosenRentOrder);
                             Console.WriteLine("Rent order data successfully updated!");
 
@@ -643,8 +650,17 @@ namespace MyProgram
 
                         WorkerPosition workerPosition = (WorkerPosition)int.Parse(Console.ReadLine());
 
-                        Worker newWorker = new Worker(newWorkerName,newWorkerSurname,workerPosition);
+                        Console.WriteLine("Enter new workers base salary");
+                        decimal newWorkerSalary = decimal.Parse(Console.ReadLine());
+
+                        Worker newWorker = new Worker(newWorkerName, newWorkerSurname, workerPosition,newWorkerSalary);
                         _workerService.AddWorker(newWorker);
+
+                        Worker createdWorker = _workerService.GetWorkerByNameSurname(newWorkerName, newWorkerSurname);
+
+                     
+                        _workerService.AddWorkersBaseSalary(createdWorker, newWorkerSalary);
+
 
                         Console.WriteLine("New worker added successfully!");
 
@@ -732,7 +748,7 @@ namespace MyProgram
                         decimal workerSalary = chosenWorker.WorkerSalary(_workerService.GetWorkerBaseSalary(workerIdForOrders), orderCount);
                         _workerService.PayOutSalary(workerIdForOrders, workerSalary);
 
-                        Console.WriteLine($"Worker salary - {workerSalary} Eur successfully paid out.");
+                        Console.WriteLine($"Worker salary - {Math.Round(workerSalary,2)} Eur successfully paid out.");
 
                         GetMenu();
                         choice2 = Console.ReadLine();
