@@ -43,12 +43,13 @@ namespace MyProgram
             Console.WriteLine("13. Delete a car");
             Console.WriteLine("14. Delete an order");
             Console.WriteLine("15. See all workers");
-            Console.WriteLine("16. Exit");
+            Console.WriteLine("16. Pay out salary");
+            Console.WriteLine("17. Exit");
 
 
             string choice2 = Console.ReadLine();
 
-            while (choice2 != "16")
+            while (choice2 != "17")
             {
 
                 switch (choice2)
@@ -637,6 +638,30 @@ namespace MyProgram
 
                         break;
 
+                    case "16":
+                        Console.WriteLine("Enter worker Id");
+
+                        int workerIdForOrders = int.Parse(Console.ReadLine());
+
+                        Worker chosenWorker = _workerService.GetWorkerById(workerIdForOrders);
+
+                        int orderCount = 0;
+
+                        foreach(RentOrder a in _workerService.GetWorkerCompletedOrders(workerIdForOrders))
+                        {
+                            orderCount++;
+                        }
+
+                        decimal workerSalary = chosenWorker.WorkerSalary(_workerService.GetWorkerBaseSalary(workerIdForOrders), orderCount);
+                        _workerService.PayOutSalary(workerIdForOrders, workerSalary);
+
+                        Console.WriteLine($"Worker salary - {workerSalary} Eur successfully paid out.");
+
+                        GetMenu();
+                        choice2 = Console.ReadLine();
+
+                        break;
+
                 }
 
             }
@@ -663,7 +688,8 @@ namespace MyProgram
             Console.WriteLine("13. Delete a car");
             Console.WriteLine("14. Delete an order");
             Console.WriteLine("15. See all workers");
-            Console.WriteLine("16. Exit");
+            Console.WriteLine("16. Pay out salary");
+            Console.WriteLine("17. Exit");
         }
 
 

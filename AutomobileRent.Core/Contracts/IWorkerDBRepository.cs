@@ -11,5 +11,8 @@ namespace AutomobileRent.Core.Contracts
     {
         List<Worker> ReadWorkersDB();
         Worker GetWorkerById(int id);
+        decimal GetWorkerBaseSalary(int workerId);
+        List<RentOrder> GetWorkerCompletedOrders(int workerId);
+        void PayOutSalary(int workerId, decimal workerSalary);
     }
 }

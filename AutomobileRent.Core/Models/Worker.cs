@@ -16,10 +16,22 @@ namespace AutomobileRent.Core.Models
 
         public Worker() { }
 
+
+        public decimal WorkerSalary(decimal baseSalary, int completedOrders)
+        {
+            if (Position == WorkerPosition.Director || Position == WorkerPosition.Mechanic)
+            {
+                return baseSalary;
+            }
+            else
+            {
+                return baseSalary + (completedOrders * 7);
+            }
+        }
+
         public override string ToString()
         {
             return $"Woker Id: {Id}, {Name} {Surname}, Position: {Position}";
         }
-
     }
 }

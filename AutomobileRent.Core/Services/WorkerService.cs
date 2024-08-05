@@ -17,11 +17,24 @@ namespace AutomobileRent.Core.Services
             _workerRepository = workerRepository;
         }
 
-
+        public decimal GetWorkerBaseSalary(int workerId)
+        {
+            return _workerRepository.GetWorkerBaseSalary(workerId);
+        }
 
         public Worker GetWorkerById(int id)
         {
             return _workerRepository.GetWorkerById(id);
+        }
+
+        public List<RentOrder> GetWorkerCompletedOrders(int workerId)
+        {
+            return _workerRepository.GetWorkerCompletedOrders(workerId);
+        }
+
+        public void PayOutSalary(int workerId, decimal workerSalary)
+        {
+            _workerRepository.PayOutSalary(workerId, workerSalary);
         }
 
         public List<Worker> ReadWorkersDB()

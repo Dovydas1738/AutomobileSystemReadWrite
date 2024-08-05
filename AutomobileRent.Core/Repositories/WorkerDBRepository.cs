@@ -38,6 +38,44 @@ namespace AutomobileRent.Core.Repositories
 
         }
 
+        public decimal GetWorkerBaseSalary(int workerId)
+        {
+            using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
+            dbConnection.Open();
+            decimal result = dbConnection.QueryFirst<decimal>(@"SELECT BaseSalary FROM dbo.DarbuotojuAtlyginimai WHERE Id = @Id", new { Id = workerId });
+            dbConnection.Close();
+            return result;
 
+        }
+
+        public List<RentOrder> GetWorkerCompletedOrders(int workerId)
+        {
+            using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
+            dbConnection.Open();
+            List<RentOrder> result = dbConnection.Query<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM dbo.NuomosUzsakymai WHERE WorkerId = @WorkerId", new { WorkerId = workerId }).ToList();
+            dbConnection.Close();
+            return result;
+
+        }
+
+        public void PayOutSalary(int workerId, decimal workerSalary)
+        {
+            string sqlCommand = "INSERT INTO IsmokamiAtlyginimai (WorkerId, Salary, PaymentDate) VALUES " +
+            "(@WorkerId, @Salary, @PaymentDate)";
+
+            var parameters = new
+            {
+                WorkerId = workerId,
+                Salary = workerSalary,
+                PaymentDate = DateTime.Now,
+            };
+
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, parameters);
+            }
+
+        }
     }
 }
