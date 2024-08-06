@@ -66,5 +66,10 @@ namespace AutomobileRent.Core.Services
         {
             _workerRepository.RenewWorkerData(worker);
         }
+
+        public void UpdateWorkerBaseSalary(Worker worker, decimal salary)
+        {
+            _workerRepository.UpdateWorkerBaseSalary(worker, salary);
+        }
     }
 }

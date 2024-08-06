@@ -59,6 +59,25 @@ namespace AutomobileRent.Core.Repositories
 
         }
 
+        public void UpdateWorkerBaseSalary(Worker worker, decimal salary)
+        {
+            string sqlCommand = @"UPDATE [DarbuotojuAtlyginimai]
+            SET [BaseSalary] = @BaseSalary
+             WHERE WorkerId = @WorkerId";
+
+            var parameters = new
+            {
+                WorkerId = worker.Id,
+                BaseSalary = salary,
+            };
+
+            using (var connection = new SqlConnection(_dbConnectionString))
+            {
+                connection.Execute(sqlCommand, parameters);
+            }
+        }
+
+
         public void AddWorkersBaseSalary (Worker worker, decimal salary)
         {
             string sqlCommand = "INSERT INTO DarbuotojuAtlyginimai ([WorkerId], [BaseSalary]) VALUES " +

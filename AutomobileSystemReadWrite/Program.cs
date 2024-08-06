@@ -44,7 +44,7 @@ namespace MyProgram
             Console.WriteLine("13. Delete a car");
             Console.WriteLine("14. Delete an order");
             Console.WriteLine("15. Add a worker");
-            Console.WriteLine("16. Edit worker's data");
+            Console.WriteLine("16. Edit worker's data"); //salary nesikeicia cia, API keiciasi
             Console.WriteLine("17. Delete a worker");
             Console.WriteLine("18. See all workers");
             Console.WriteLine("19. Pay out a salary");

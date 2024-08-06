@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomobileSystemReadWrite", "AutomobileSystemReadWrite\AutomobileSystemReadWrite.csproj", "{276C045C-D3A3-4991-B76D-896A0BB7651D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomobileSystemReadWrite", "AutomobileSystemReadWrite\AutomobileSystemReadWrite.csproj", "{276C045C-D3A3-4991-B76D-896A0BB7651D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomobileRent.Core", "AutomobileRent.Core\AutomobileRent.Core.csproj", "{AA914370-A707-466C-947A-E7016476909D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomobileRent.Core", "AutomobileRent.Core\AutomobileRent.Core.csproj", "{AA914370-A707-466C-947A-E7016476909D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentServiceAPI", "RentServiceAPI\RentServiceAPI.csproj", "{70FB90AE-7FA5-4339-9D31-630F1E7D834E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{AA914370-A707-466C-947A-E7016476909D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA914370-A707-466C-947A-E7016476909D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA914370-A707-466C-947A-E7016476909D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70FB90AE-7FA5-4339-9D31-630F1E7D834E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70FB90AE-7FA5-4339-9D31-630F1E7D834E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70FB90AE-7FA5-4339-9D31-630F1E7D834E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70FB90AE-7FA5-4339-9D31-630F1E7D834E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

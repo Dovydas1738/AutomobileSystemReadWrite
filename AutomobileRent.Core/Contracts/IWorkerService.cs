@@ -19,5 +19,6 @@ namespace AutomobileRent.Core.Contracts
         void DeleteWorkerById(int workerId);
         void AddWorkersBaseSalary(Worker worker, decimal salary);
         Worker GetWorkerByNameSurname(string name, string surname);
+        void UpdateWorkerBaseSalary(Worker worker, decimal salary);
     }
 }
