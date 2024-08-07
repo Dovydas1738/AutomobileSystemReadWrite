@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Worker.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AutomobileRent.Core\AutomobileRent.Core.csproj" />
   </ItemGroup>
 
@@ -20,10 +16,6 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\Worker.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Worker.cshtml" />
   </ItemGroup>
 
 </Project>
