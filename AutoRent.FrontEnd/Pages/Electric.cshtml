@@ -1,0 +1,31 @@
+﻿@page
+@using AutomobileRent.Core.Models
+@model AutoRent.FrontEnd.Pages.ElectricModel
+@{
+	ViewData["Title"] = "Electric Cars";
+	Layout = "Shared/_Layout";
+}
+
+<table class="my-table">
+    <tr class="my-table-row-headings">
+        <th>ID</th>
+        <th>Maker</th>
+        <th>Model</th>
+        <th>RentPrice</th>
+        <th>BatteryCapacity</th>
+        <th>ChargeTime</th>
+    </tr>
+    @foreach (Electric ev in Model.ElectricCars)
+    {
+        <tr class="my-table-row">
+            <td>@ev.Id</td>
+            <td>@ev.Maker</td>
+            <td>@ev.Model</td>
+            <td>@ev.RentPrice.ToString("F2") €</td>
+            <td>@ev.BatteryCapacity kWh</td>
+            <td>@ev.ChargeTime hr</td>
+        </tr>
+    }
+
+
+</table>

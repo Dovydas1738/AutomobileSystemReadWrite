@@ -1,0 +1,27 @@
+﻿@page
+@using AutomobileRent.Core.Models
+@model AutoRent.FrontEnd.Pages.CustomerModel
+@{
+	ViewData["Title"] = "Combustion engine cars";
+	Layout = "Shared/_Layout";
+}
+
+<table class="my-table">
+    <tr class="my-table-row-headings">
+        <th>Name</th>
+        <th>Surname</th>
+        <th>BirthDate</th>
+        <th>CustomerId</th>
+    </tr>
+    @foreach (Customer customer in Model.Customers)
+    {
+        <tr class="my-table-row">
+            <td>@customer.Name</td>
+            <td>@customer.Surname</td>
+            <td>@customer.BirthDate.ToShortDateString()</td>
+            <td>@customer.CustomerId</td>
+        </tr>
+    }
+
+
+</table>

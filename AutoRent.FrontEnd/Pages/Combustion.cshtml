@@ -1,0 +1,29 @@
+﻿@page
+@using AutomobileRent.Core.Models
+@model AutoRent.FrontEnd.Pages.CombustionModel
+@{
+	ViewData["Title"] = "Combustion engine cars";
+	Layout = "Shared/_Layout";
+}
+
+<table class="my-table">
+    <tr class="my-table-row-headings">
+        <th>ID</th>
+        <th>Maker</th>
+        <th>Model</th>
+        <th>RentPrice</th>
+        <th>FuelConsumption</th>
+    </tr>
+    @foreach (Combustion ce in Model.CombustionCars)
+    {
+        <tr class="my-table-row">
+            <td>@ce.Id</td>
+            <td>@ce.Maker</td>
+            <td>@ce.Model</td>
+            <td>@ce.RentPrice.ToString("F2") €</td>
+            <td>@ce.FuelConsumption.ToString("F1") l/100km</td>
+        </tr>
+    }
+
+
+</table>
