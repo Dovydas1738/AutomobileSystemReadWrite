@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using AutomobileRent.Core.Models;
 using AutomobileRent.Core.Contracts;
 using AutomobileRent.Core.Services;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace AutoRent.FrontEnd.Pages
 {
@@ -10,6 +11,7 @@ namespace AutoRent.FrontEnd.Pages
     {
         private readonly AutoRentService _autoRentService;
         public List<Electric> ElectricCars;
+        public Electric NewElectric;
 
         public ElectricModel(AutoRentService autoRentService)
         {
@@ -20,5 +22,6 @@ namespace AutoRent.FrontEnd.Pages
         {
             ElectricCars = _autoRentService.GetAllElectric();
         }
+
     }
 }

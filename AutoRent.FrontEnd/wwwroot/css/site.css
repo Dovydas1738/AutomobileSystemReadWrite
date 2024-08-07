@@ -22,9 +22,10 @@ body {
 }
 
 .my-table {
-    width: 70%;
+    width: 100%;
     border: 2px solid;
     border-color: black;
+    text-align: center;
 }
 
 .my-table-row-headings {

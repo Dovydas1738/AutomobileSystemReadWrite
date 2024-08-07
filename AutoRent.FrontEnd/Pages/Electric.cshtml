@@ -18,7 +18,7 @@
     @foreach (Electric ev in Model.ElectricCars)
     {
         <tr class="my-table-row">
-            <td>@ev.Id</td>
+            <td class="my-table-column">@ev.Id</td>
             <td>@ev.Maker</td>
             <td>@ev.Model</td>
             <td>@ev.RentPrice.ToString("F2") €</td>
@@ -26,6 +26,74 @@
             <td>@ev.ChargeTime hr</td>
         </tr>
     }
-
-
 </table>
+
+<br>
+<br>
+<br>
+
+<div class="text-left">
+    <h1 class="display-4">Add new electric car</h1>
+    <p>Enter data to add a new car to the list</p>
+</div>
+
+<br>
+
+<form>
+    <label for="maker">Enter car maker:</label><br>
+    <input type="text" id="maker" maker="maker"><br><br>
+    <label for="model">Enter car model:</label><br>
+    <input type="text" id="model" model="model"><br><br>
+    <label for="rentPrice">Enter car rent price per day:</label><br>
+    <input type="text" id="rentPrice" rentPrice="rentPrice"><br><br>
+    <label for="batteryCapacity">Enter car battery capacity (kWh):</label><br>
+    <input type="text" id="batteryCapacity" batteryCapacity="batteryCapacity"><br><br>
+    <label for="chargeTime">Enter car charging time (hr):</label><br>
+    <input type="text" id="chargeTime" chargeTime="chargeTime"><br><br>
+    <br>
+    <input type="submit">
+
+</form>
+
+<br>
+<br>
+<br>
+
+<div class="text-left">
+    <h1 class="display-4">Update electric car data</h1>
+    <p>Enter data to update a car from the list</p>
+</div>
+
+<br>
+
+<form>
+    <label for="maker">Enter car maker:</label><br>
+    <input type="text" id="maker" maker="maker"><br><br>
+    <label for="model">Enter car model:</label><br>
+    <input type="text" id="model" model="model"><br><br>
+    <label for="rentPrice">Enter car rent price per day:</label><br>
+    <input type="text" id="rentPrice" rentPrice="rentPrice"><br><br>
+    <label for="batteryCapacity">Enter car battery capacity (kWh):</label><br>
+    <input type="text" id="batteryCapacity" batteryCapacity="batteryCapacity"><br><br>
+    <label for="chargeTime">Enter car charging time (hr):</label><br>
+    <input type="text" id="chargeTime" chargeTime="chargeTime"><br><br>
+    <br>
+    <input type="submit">
+
+</form>
+
+<br>
+<br>
+<br>
+
+<div class="text-left">
+    <h1 class="display-4">Delete electric car from the list</h1>
+    <p>Enter car Id you want to delete</p>
+</div>
+
+<br>
+
+<form>
+    <label for="carId">Enter car Id:</label><br>
+    <input type="text" id="carId" carId="carId"><br><br>
+</form>

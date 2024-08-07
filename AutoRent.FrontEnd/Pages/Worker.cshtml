@@ -1,0 +1,26 @@
+﻿@page
+@using AutomobileRent.Core.Models
+@model AutoRent.FrontEnd.Pages.WorkerModel
+@{
+	ViewData["Title"] = "Combustion engine cars";
+	Layout = "Shared/_Layout";
+}
+
+<table class="my-table">
+    <tr class="my-table-row-headings">
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Position</th>
+    </tr>
+    @foreach (Worker worker in Model.Workers)
+    {
+        <tr class="my-table-row">
+            <td>@worker.Name</td>
+            <td>@worker.Surname</td>
+            <td>@worker.Position</td>
+        </tr>
+    }
+
+
+</table>
+

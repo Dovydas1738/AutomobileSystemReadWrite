@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomobileRent.Core", "Auto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentServiceAPI", "RentServiceAPI\RentServiceAPI.csproj", "{70FB90AE-7FA5-4339-9D31-630F1E7D834E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRent.FrontEnd", "AutoRent.FrontEnd\AutoRent.FrontEnd.csproj", "{1653DAE3-BF4B-4AED-BBB4-19DEA0FBDE62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoRent.FrontEnd", "AutoRent.FrontEnd\AutoRent.FrontEnd.csproj", "{1653DAE3-BF4B-4AED-BBB4-19DEA0FBDE62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
