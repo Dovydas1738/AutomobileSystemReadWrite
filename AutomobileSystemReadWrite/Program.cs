@@ -4,6 +4,7 @@ using AutomobileRent.Core.Services;
 using AutomobileRent.Core.Models;
 using System;
 using AutomobileRent.Core.Enums;
+using MongoDB.Driver;
 
 namespace MyProgram
 {
@@ -11,8 +12,10 @@ namespace MyProgram
     {
         public static void Main(string[] args)
         {
+            //IMongoClient mongoClient = new MongoClient("mongodb+srv://dovism:<Slaptazodis>@cluster0.dh7gm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+            //IMongoDbCacheRepository _mongoCache = new MongoDbCacheRepository(mongoClient);
             IWorkerDBRepository _workerRepository = new WorkerDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;");
-            IWorkerService _workerService = new WorkerService(_workerRepository);
+            IWorkerService _workerService = new WorkerService(_workerRepository, _mongoCache);
             IRentOrderRepository _rentOrderRepository = new RentOrderDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;");
             IRentService _rentService = new RentService(_rentOrderRepository);
             //ICarsRepository _carsRepository = new CarsRepository("C:\\Users\\dovis\\source\\repos\\AutomobileSystemReadWrite\\AutomobileRent.Core\\Repositories\\CarsData.txt");
@@ -60,7 +63,7 @@ namespace MyProgram
                 {
                     case "1":
                         Console.WriteLine("All available combustion cars: ");
-                        List<Combustion> allCombustionCars = _autoRentService.GetAllCombustion();
+                        List<Combustion> allCombustionCars = _autoRentService.GetAllCombustion().Result;
 
                         foreach (Car car in allCombustionCars)
                         {
@@ -68,7 +71,7 @@ namespace MyProgram
                         }
 
                         Console.WriteLine("All available electric cars: ");
-                        List<Electric> allElectricCars = _autoRentService.GetAllElectric();
+                        List<Electric> allElectricCars = _autoRentService.GetAllElectric().Result;
 
                         foreach (Car car in allElectricCars)
                         {
@@ -215,7 +218,7 @@ namespace MyProgram
                                 Console.WriteLine("Which car would the customer like to rent? (enter Id)");
                                 int toChooseCarId = int.Parse(Console.ReadLine());
 
-                                Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId);
+                                Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId).Result;
 
                                 Console.WriteLine("Enter rent duration (days)");
                                 int duration = int.Parse(Console.ReadLine());
@@ -235,7 +238,7 @@ namespace MyProgram
                                 Console.WriteLine("Which car would the customer like to rent? (enter Id)");
                                 int toChooseCarId = int.Parse(Console.ReadLine());
 
-                                Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId);
+                                Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId).Result;
 
                                 Console.WriteLine("Enter rent duration (days)");
                                 int duration = int.Parse(Console.ReadLine());
@@ -331,7 +334,7 @@ namespace MyProgram
                                 Console.WriteLine("Which car do you want to edit? (enter Id)");
                                 int toChooseCarId = int.Parse(Console.ReadLine());
 
-                                Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId);
+                                Car chosenCar = _autoRentService.GetElectricCarById(toChooseCarId).Result;
 
                                 Console.WriteLine("Enter car Maker (enter to skip)");
                                 string makerChoice = Console.ReadLine();
@@ -381,7 +384,7 @@ namespace MyProgram
                                 Console.WriteLine("Which car do you want to edit? (enter Id)");
                                 int toChooseCarId = int.Parse(Console.ReadLine());
 
-                                Car chosenCar = _autoRentService.GetCombustionCarById(toChooseCarId);
+                                Car chosenCar = _autoRentService.GetCombustionCarById(toChooseCarId).Result;
 
                                 Console.WriteLine("Enter car Maker (enter to skip)");
                                 string makerChoice = Console.ReadLine();
@@ -511,7 +514,7 @@ namespace MyProgram
 
                                 if (int.TryParse(Console.ReadLine(), out int customerCarIdChoice))
                                 {
-                                    chosenRentOrder.Car = _autoRentService.GetElectricCarById(customerCarIdChoice);
+                                    chosenRentOrder.Car = _autoRentService.GetElectricCarById(customerCarIdChoice).Result;
                                     chosenRentOrder.Type = "Electric";
                                 }
 
@@ -523,7 +526,7 @@ namespace MyProgram
 
                                 if (int.TryParse(Console.ReadLine(), out int customerCarIdChoice))
                                 {
-                                    chosenRentOrder.Car = _autoRentService.GetCombustionCarById(customerCarIdChoice);
+                                    chosenRentOrder.Car = _autoRentService.GetCombustionCarById(customerCarIdChoice).Result;
                                     chosenRentOrder.Type = "Combustion";
                                 }
 

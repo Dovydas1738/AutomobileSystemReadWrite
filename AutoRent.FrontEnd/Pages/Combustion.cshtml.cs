@@ -15,9 +15,9 @@ namespace AutoRent.FrontEnd.Pages
             _autoRentService = autoRentService;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
-            CombustionCars = _autoRentService.GetAllCombustion();
+            CombustionCars = await _autoRentService.GetAllCombustion();
         }
     }
 }

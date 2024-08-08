@@ -19,12 +19,19 @@ namespace RentServiceAPI.Controllers
             _workerService = workerService;
         }
 
+        [HttpGet("GetWorkerById")]
+        public async Task<IActionResult> GetWorkerById(int id)
+        {
+            var worker = await _workerService.GetWorkerById(id);
+            return Ok(worker);
+        }
+
         [HttpGet("GetAllWorkers")]
-        public IActionResult GetAllWorkers()
+        public async Task<IActionResult> GetAllWorkers()
         {
             try
             {
-                var allWorkers = _workerService.ReadWorkersDB();
+                var allWorkers = await _workerService.ReadWorkersDB();
                 return Ok(allWorkers);
             }
             catch
@@ -34,15 +41,15 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpPost("AddWorker")]
-        public IActionResult AddWorker(Worker worker, decimal newWorkerSalary)
+        public async Task<IActionResult> AddWorker(Worker worker, decimal newWorkerSalary)
         {
             try
             {
-                _workerService.AddWorker(worker);
+                await _workerService.AddWorker(worker);
 
                 Worker createdWorker = _workerService.GetWorkerByNameSurname(worker.Name, worker.Surname);
 
-                _workerService.AddWorkersBaseSalary(createdWorker, newWorkerSalary);
+                await _workerService.AddWorkersBaseSalary(createdWorker, newWorkerSalary);
 
                 return Ok();
             }
@@ -53,15 +60,15 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpPatch("UpdateWorker")]
-        public IActionResult UpdateWorker(Worker worker, decimal updatedWorkerSalary)
+        public async Task<IActionResult> UpdateWorker(Worker worker, decimal updatedWorkerSalary)
         {
             try
             {
-                _workerService.RenewWorkerData(worker);
+                await _workerService.RenewWorkerData(worker);
 
                 Worker chosenWorker = _workerService.GetWorkerByNameSurname(worker.Name, worker.Surname);
 
-                _workerService.UpdateWorkerBaseSalary(chosenWorker, updatedWorkerSalary);
+                await _workerService.UpdateWorkerBaseSalary(chosenWorker, updatedWorkerSalary);
 
                 return Ok();
             }
@@ -72,11 +79,11 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpDelete("DeleteWorkerById")]
-        public IActionResult DeleteWorkerById(int id)
+        public async Task<IActionResult> DeleteWorkerById(int id)
         {
             try
             {
-                _workerService.DeleteWorkerById(id);
+                await _workerService.DeleteWorkerById(id);
                 return Ok();
             }
             catch
@@ -86,19 +93,19 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpGet("PayOutSalary")]
-        public IActionResult PayOutSalary(int id)
+        public async Task<IActionResult> PayOutSalary(int id)
         {
-            Worker chosenWorker = _workerService.GetWorkerById(id);
+            Worker chosenWorker = _workerService.GetWorkerById(id).Result;
 
             int orderCount = 0;
 
-            foreach (RentOrder a in _workerService.GetWorkerCompletedOrders(id))
+            foreach (RentOrder a in _workerService.GetWorkerCompletedOrders(id).Result)
             {
                 orderCount++;
             }
 
-            decimal workerSalary = chosenWorker.WorkerSalary(_workerService.GetWorkerBaseSalary(id), orderCount);
-            _workerService.PayOutSalary(id, workerSalary);
+            decimal workerSalary = chosenWorker.WorkerSalary(_workerService.GetWorkerBaseSalary(id).Result, orderCount);
+            await _workerService.PayOutSalary(id, workerSalary);
 
             return Ok(workerSalary);
 

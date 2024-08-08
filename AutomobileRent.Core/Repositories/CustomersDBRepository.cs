@@ -19,37 +19,37 @@ namespace AutomobileRent.Core.Repositories
             _dbConnectionString = connectionString;
         }
 
-        public List<Customer> ReadCustomersDB()
+        public async Task<List<Customer>> ReadCustomersDB()
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            List<Customer> result = dbConnection.Query<Customer>(@"SELECT Id AS CustomerId, Name, Surname, BirthDate FROM dbo.Klientai").ToList();
+            var result = await dbConnection.QueryAsync<Customer>(@"SELECT Id AS CustomerId, Name, Surname, BirthDate FROM dbo.Klientai");
             dbConnection.Close();
-            return result;
+            return result.ToList();
         }
 
-        public void WriteCustomerDB(Customer customer)
+        public async Task WriteCustomerDB(Customer customer)
         {
             string sqlCommand = "INSERT INTO Klientai ([Name], [Surname], [BirthDate]) VALUES " +
             "(@Name, @Surname, @BirthDate)";
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, customer);
+                await connection.ExecuteAsync(sqlCommand, customer);
             }
         }
 
-        public Customer GetCustomerById(int id)
+        public async Task<Customer> GetCustomerById(int id)
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            Customer result = dbConnection.QueryFirst<Customer>(@"SELECT Id AS CustomerId, Name, Surname, BirthDate FROM [dbo].[Klientai] WHERE Id = @Id", new { Id = id });
+            var result = await dbConnection.QueryFirstAsync<Customer>(@"SELECT Id AS CustomerId, Name, Surname, BirthDate FROM [dbo].[Klientai] WHERE Id = @Id", new { Id = id });
             dbConnection.Close();
             return result;
 
         }
 
-        public void RenewCustomer(Customer customer)
+        public async Task RenewCustomer(Customer customer)
         {
             string sqlCommand = @"UPDATE [Klientai]
             SET [Name] = @Name
@@ -59,12 +59,12 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, customer);
+                await connection.ExecuteAsync(sqlCommand, customer);
             }
 
         }
 
-        public void DeleteCustomerById(int id)
+        public async Task DeleteCustomerById(int id)
         {
             string sqlCommand = "DELETE FROM Klientai WHERE Id = @id";
 
@@ -75,7 +75,7 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
         }
 

@@ -138,5 +138,55 @@ namespace AutomobileRent.Core.Repositories
         {
             throw new NotImplementedException();
         }
+
+        Task ICarsRepository.DeleteCombustionById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ICarsRepository.DeleteElectricById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Combustion> ICarsRepository.GetCombustionCarById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Electric> ICarsRepository.GetElectricCarById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Combustion>> ICarsRepository.ReadAllCombustion()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Electric>> ICarsRepository.ReadAllElectric()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ICarsRepository.RenewCombustion(Combustion combustion)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ICarsRepository.RenewElectric(Electric electric)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ICarsRepository.WriteOneCombustion(Combustion combustion)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ICarsRepository.WriteOneElectric(Electric electric)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

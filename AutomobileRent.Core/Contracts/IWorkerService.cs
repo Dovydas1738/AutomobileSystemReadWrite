@@ -9,16 +9,16 @@ namespace AutomobileRent.Core.Contracts
 {
     public interface IWorkerService
     {
-        List<Worker> ReadWorkersDB();
-        Worker GetWorkerById(int id);
-        decimal GetWorkerBaseSalary(int workerId);
-        List<RentOrder> GetWorkerCompletedOrders(int workerId);
-        void PayOutSalary(int workerId, decimal workerSalary);
-        void AddWorker(Worker worker);
-        void RenewWorkerData(Worker worker);
-        void DeleteWorkerById(int workerId);
-        void AddWorkersBaseSalary(Worker worker, decimal salary);
+        Task<List<Worker>> ReadWorkersDB();
+        Task<Worker> GetWorkerById(int id);
+        Task<decimal> GetWorkerBaseSalary(int workerId);
+        Task<List<RentOrder>> GetWorkerCompletedOrders(int workerId);
+        Task PayOutSalary(int workerId, decimal workerSalary);
+        Task AddWorker(Worker worker);
+        Task RenewWorkerData(Worker worker);
+        Task DeleteWorkerById(int workerId);
+        Task AddWorkersBaseSalary(Worker worker, decimal salary);
         Worker GetWorkerByNameSurname(string name, string surname);
-        void UpdateWorkerBaseSalary(Worker worker, decimal salary);
+        Task UpdateWorkerBaseSalary(Worker worker, decimal salary);
     }
 }

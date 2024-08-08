@@ -31,9 +31,16 @@ namespace AutomobileRent.Core.Services
             _carsRepository.WriteCars(cars);
         }
 
-        public List<Car> GetAllCars()
+        public async Task<List<Car>> GetAllCars()
         {
-            return _carsRepository.ReadCars();
+            List<Car> allCars = new List<Car>();
+            var electric = _carsRepository.ReadAllElectric();
+            var combustion = _carsRepository.ReadAllCombustion();
+            await Task.WhenAll(electric, combustion);
+            allCars.AddRange(electric.Result);
+            allCars.AddRange(combustion.Result);
+
+            return allCars.ToList();
         }
 
         public void AddCar(Car car)
@@ -44,8 +51,8 @@ namespace AutomobileRent.Core.Services
         public List<Car> SearchByMaker(string maker)
         {
             List<Car> searchResults = new List<Car>();
-            List<Electric> elCars = _carsRepository.ReadAllElectric();
-            List<Combustion> combCars = _carsRepository.ReadAllCombustion();
+            List<Electric> elCars = _carsRepository.ReadAllElectric().Result;
+            List<Combustion> combCars = _carsRepository.ReadAllCombustion().Result;
             
             
             foreach(Car a in elCars)
@@ -68,54 +75,54 @@ namespace AutomobileRent.Core.Services
             return searchResults;
         }
 
-        public List<Electric> ReadAllElectric()
+        public async Task<List<Electric>> ReadAllElectric()
         {
-            return _carsRepository.ReadAllElectric();
+            return await _carsRepository.ReadAllElectric();
         }
 
-        public List<Combustion> ReadAllCombustion()
+        public async Task<List<Combustion>> ReadAllCombustion()
         {
-            return _carsRepository.ReadAllCombustion();
+            return await _carsRepository.ReadAllCombustion();
         }
 
-        public void WriteOneElectric(Electric electric)
+        public async Task WriteOneElectric(Electric electric)
         {
-            _carsRepository.WriteOneElectric(electric);
+            await _carsRepository.WriteOneElectric(electric);
         }
 
-        public void WriteOneCombustion(Combustion combustion)
+        public async Task WriteOneCombustion(Combustion combustion)
         {
-            _carsRepository.WriteOneCombustion(combustion);
+            await _carsRepository.WriteOneCombustion(combustion);
         }
 
-        public Electric GetElectricCarById(int id)
+        public async Task<Electric> GetElectricCarById(int id)
         {
-            return _carsRepository.GetElectricCarById(id);
+            return await _carsRepository.GetElectricCarById(id);
         }
 
-        public Combustion GetCombustionCarById(int id)
+        public async Task<Combustion> GetCombustionCarById(int id)
         {
-            return _carsRepository.GetCombustionCarById(id);
+            return await _carsRepository.GetCombustionCarById(id);
         }
 
-        public void RenewElectric(Electric electric)
+        public async Task RenewElectric(Electric electric)
         {
-            _carsRepository.RenewElectric(electric);
+            await _carsRepository.RenewElectric(electric);
         }
 
-        public void RenewCombustion(Combustion combustion)
+        public async Task RenewCombustion(Combustion combustion)
         {
-            _carsRepository.RenewCombustion(combustion);
+            await _carsRepository.RenewCombustion(combustion);
         }
 
-        public void DeleteElectricCarById(int id)
+        public async Task DeleteElectricCarById(int id)
         {
-            _carsRepository.DeleteElectricById(id);
+            await _carsRepository.DeleteElectricById(id);
         }
 
-        public void DeleteCombustionCarById(int id)
+        public async Task DeleteCombustionCarById(int id)
         {
-            _carsRepository.DeleteCombustionById(id);
+            await _carsRepository.DeleteCombustionById(id);
         }
 
 

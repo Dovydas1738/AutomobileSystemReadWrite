@@ -14,10 +14,10 @@ namespace AutomobileRent.Core.Contracts
         List<Customer> GetAllCustomers();
         void AddCustomer(Customer customer);
         List<Customer> SearchByNameSurname(string name, string surname);
-        List<Customer> ReadCustomersDB();
-        void WriteCustomerDB(Customer customer);
-        Customer GetCustomerById(int id);
-        void RenewCustomer(Customer customer);
-        void DeleteCustomerById(int id);
+        Task<List<Customer>> ReadCustomersDB();
+        Task WriteCustomerDB(Customer customer);
+        Task<Customer> GetCustomerById(int id);
+        Task RenewCustomer(Customer customer);
+        Task DeleteCustomerById(int id);
     }
 }

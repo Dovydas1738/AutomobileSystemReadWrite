@@ -25,71 +25,72 @@ namespace AutomobileRent.Core.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Electric> ReadAllElectric()
+        public async Task<List<Electric>> ReadAllElectric()
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            List<Electric> result = dbConnection.Query<Electric>(@"SELECT * FROM [dbo].[Elektromobiliai]").ToList();
+            var result = await dbConnection.
+            QueryAsync<Electric>(@"SELECT * FROM [dbo].[Elektromobiliai]");
             dbConnection.Close();
-            return result;
+            return result.ToList();
         }
 
-        public void WriteOneElectric(Electric electric)
+        public async Task WriteOneElectric(Electric electric)
         {
             string sqlCommand = "INSERT INTO Elektromobiliai ([Maker],[Model],[RentPrice],[BatteryCapacity],[ChargeTime]) VALUES " +
             "(@Maker, @Model, @RentPrice, @BatteryCapacity, @ChargeTime)";
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, electric);
+                await connection.ExecuteAsync(sqlCommand, electric);
             }
         }
 
-        public void WriteOneCombustion(Combustion combustion)
+        public async Task WriteOneCombustion(Combustion combustion)
         {
             string sqlCommand = "INSERT INTO NaftosKuroAutomobiliai ([Maker],[Model],[RentPrice],[FuelConsumption]) VALUES " +
             "(@Maker, @Model, @RentPrice, @FuelConsumption)";
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, combustion);
+                await connection.ExecuteAsync(sqlCommand, combustion);
             }
         }
 
 
-        public List<Combustion> ReadAllCombustion()
+        public async Task<List<Combustion>> ReadAllCombustion()
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            List<Combustion> result = dbConnection.Query<Combustion>(@"SELECT * FROM [dbo].[NaftosKuroAutomobiliai]").ToList();
+            var result = await dbConnection.QueryAsync<Combustion>(@"SELECT * FROM [dbo].[NaftosKuroAutomobiliai]");
             dbConnection.Close();
-            return result;
+            return result.ToList();
 
         }
 
 
 
-        public Electric GetElectricCarById(int id)
+        public async Task<Electric> GetElectricCarById(int id)
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            Electric result = dbConnection.QueryFirst<Electric>(@"SELECT * FROM [dbo].[Elektromobiliai] WHERE Id = @Id", new {Id=id});
+            var result = await dbConnection.QueryFirstAsync<Electric>(@"SELECT * FROM [dbo].[Elektromobiliai] WHERE Id = @Id", new {Id=id});
             dbConnection.Close();
             return result;
 
         }
 
-        public Combustion GetCombustionCarById(int id)
+        public async Task<Combustion> GetCombustionCarById(int id)
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            Combustion result = dbConnection.QueryFirst<Combustion>(@"SELECT * FROM [dbo].[NaftosKuroAutomobiliai] WHERE Id = @Id", new {Id=id});
+            var result = await dbConnection.QueryFirstAsync<Combustion>(@"SELECT * FROM [dbo].[NaftosKuroAutomobiliai] WHERE Id = @Id", new {Id=id});
             dbConnection.Close();
             return result;
 
         }
 
-        public void RenewElectric(Electric electric)
+        public async Task RenewElectric(Electric electric)
         {
             string sqlCommand = @"UPDATE [Elektromobiliai]
             SET [Maker] = @Maker
@@ -101,11 +102,11 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, electric);
+                await connection.ExecuteAsync(sqlCommand, electric);
             }
         }
 
-        public void RenewCombustion(Combustion combustion)
+        public async Task RenewCombustion(Combustion combustion)
         {
             string sqlCommand = @"UPDATE [NaftosKuroAutomobiliai]
             SET [Maker] = @Maker
@@ -116,11 +117,11 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, combustion);
+                await connection.ExecuteAsync(sqlCommand, combustion);
             }
         }
 
-        public void DeleteElectricById(int id)
+        public async Task DeleteElectricById(int id)
         {
             string sqlCommand = "DELETE FROM Elektromobiliai WHERE Id = @id";
 
@@ -131,11 +132,11 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
         }
 
-        public void DeleteCombustionById(int id)
+        public async Task DeleteCombustionById(int id)
         {
             string sqlCommand = "DELETE FROM NaftosKuroAutomobiliai WHERE Id = @id";
 
@@ -146,7 +147,7 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
         }
 

@@ -19,20 +19,20 @@ namespace AutomobileRent.Core.Repositories
             _dbConnectionString = connectionString;
         }
 
-        public List<Worker> ReadWorkersDB()
+        public async Task<List<Worker>> ReadWorkersDB()
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            List<Worker> result = dbConnection.Query<Worker>(@"SELECT * FROM dbo.Darbuotojai").ToList();
+            var result = await dbConnection.QueryAsync<Worker>(@"SELECT * FROM dbo.Darbuotojai");
             dbConnection.Close();
-            return result;
+            return result.ToList();
         }
 
-        public Worker GetWorkerById(int id)
+        public async Task<Worker> GetWorkerById(int id)
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            Worker result = dbConnection.QueryFirst<Worker>(@"SELECT * FROM dbo.Darbuotojai WHERE Id = @Id", new { Id = id });
+            var result = await dbConnection.QueryFirstAsync<Worker>(@"SELECT * FROM dbo.Darbuotojai WHERE Id = @Id", new { Id = id });
             dbConnection.Close();
             return result;
 
@@ -49,17 +49,17 @@ namespace AutomobileRent.Core.Repositories
         }
 
 
-        public decimal GetWorkerBaseSalary(int workerId)
+        public async Task<decimal> GetWorkerBaseSalary(int workerId)
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            decimal result = dbConnection.QueryFirst<decimal>(@"SELECT BaseSalary FROM dbo.DarbuotojuAtlyginimai WHERE WorkerId = @WorkerId", new { WorkerId = workerId });
+            var result = await dbConnection.QueryFirstAsync<decimal>(@"SELECT BaseSalary FROM dbo.DarbuotojuAtlyginimai WHERE WorkerId = @WorkerId", new { WorkerId = workerId });
             dbConnection.Close();
             return result;
 
         }
 
-        public void UpdateWorkerBaseSalary(Worker worker, decimal salary)
+        public async Task UpdateWorkerBaseSalary(Worker worker, decimal salary)
         {
             string sqlCommand = @"UPDATE [DarbuotojuAtlyginimai]
             SET [BaseSalary] = @BaseSalary
@@ -73,12 +73,12 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
         }
 
 
-        public void AddWorkersBaseSalary (Worker worker, decimal salary)
+        public async Task AddWorkersBaseSalary (Worker worker, decimal salary)
         {
             string sqlCommand = "INSERT INTO DarbuotojuAtlyginimai ([WorkerId], [BaseSalary]) VALUES " +
             "(@WorkerId, @BaseSalary)";
@@ -92,22 +92,22 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
 
         }
 
-        public List<RentOrder> GetWorkerCompletedOrders(int workerId)
+        public async Task<List<RentOrder>> GetWorkerCompletedOrders(int workerId)
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            List<RentOrder> result = dbConnection.Query<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM dbo.NuomosUzsakymai WHERE WorkerId = @WorkerId", new { WorkerId = workerId }).ToList();
+            var result = await dbConnection.QueryAsync<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM dbo.NuomosUzsakymai WHERE WorkerId = @WorkerId", new { WorkerId = workerId });
             dbConnection.Close();
-            return result;
+            return result.ToList();
 
         }
 
-        public void PayOutSalary(int workerId, decimal workerSalary)
+        public async Task PayOutSalary(int workerId, decimal workerSalary)
         {
             string sqlCommand = "INSERT INTO IsmokamiAtlyginimai (WorkerId, Salary, PaymentDate) VALUES " +
             "(@WorkerId, @Salary, @PaymentDate)";
@@ -122,24 +122,24 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
 
         }
 
-        public void AddWorker(Worker worker)
+        public async Task AddWorker(Worker worker)
         {
             string sqlCommand = "INSERT INTO Darbuotojai ([Name], [Surname], [Position]) VALUES " +
             "(@Name, @Surname, @Position)";
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, worker);
+                await connection.ExecuteAsync(sqlCommand, worker);
             }
 
         }
 
-        public void RenewWorkerData(Worker worker)
+        public async Task RenewWorkerData(Worker worker)
         {
             string sqlCommand = @"UPDATE [Darbuotojai]
             SET [Name] = @Name
@@ -149,11 +149,11 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, worker);
+                await connection.ExecuteAsync(sqlCommand, worker);
             }
         }
 
-        public void DeleteWorkerById(int workerId)
+        public async Task DeleteWorkerById(int workerId)
         {
             string sqlCommand = "DELETE FROM Darbuotojai WHERE Id = @id";
 
@@ -164,7 +164,7 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
 
         }

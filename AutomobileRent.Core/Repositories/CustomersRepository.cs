@@ -78,5 +78,30 @@ namespace AutomobileRent.Core.Repositories
                 customerWriter.WriteLine($"{customer.Name},{customer.Surname},{customer.BirthDate}");
             }
         }
+
+        Task ICustomersRepository.DeleteCustomerById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Customer> ICustomersRepository.GetCustomerById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Customer>> ICustomersRepository.ReadCustomersDB()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ICustomersRepository.RenewCustomer(Customer customer)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ICustomersRepository.WriteCustomerDB(Customer customer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -12,15 +12,16 @@ namespace AutomobileRent.Core.Contracts
         List<Car> ReadCars();
         void WriteCars(List<Car> cars);
         void WriteOneCar(Car car);
-        List<Electric> ReadAllElectric();
-        List<Combustion> ReadAllCombustion();
-        void WriteOneElectric(Electric electric);
-        void WriteOneCombustion(Combustion combustion);
-        Electric GetElectricCarById(int id);
-        Combustion GetCombustionCarById(int id);
-        void RenewElectric(Electric electric);
-        void RenewCombustion(Combustion combustion);
-        void DeleteElectricById(int id);
-        void DeleteCombustionById(int id);
+        Task<List<Electric>> ReadAllElectric();
+        Task<List<Combustion>> ReadAllCombustion();
+        Task WriteOneElectric(Electric electric);
+        Task WriteOneCombustion(Combustion combustion);
+        Task<Electric> GetElectricCarById(int id);
+        Task<Combustion> GetCombustionCarById(int id);
+        Task RenewElectric(Electric electric);
+        Task RenewCombustion(Combustion combustion);
+        Task DeleteElectricById(int id);
+        Task DeleteCombustionById(int id);
+
     }
 }

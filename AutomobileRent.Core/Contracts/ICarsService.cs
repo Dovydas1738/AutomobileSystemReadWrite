@@ -11,18 +11,18 @@ namespace AutomobileRent.Core.Contracts
     {
         void ReadFromFile();
         void WriteToFile(List<Car> cars);
-        List<Car> GetAllCars();
+        Task<List<Car>> GetAllCars();
         void AddCar(Car car);
         List<Car> SearchByMaker(string maker);
-        List<Electric> ReadAllElectric();
-        List<Combustion> ReadAllCombustion();
-        void WriteOneElectric(Electric electric);
-        void WriteOneCombustion(Combustion combustion);
-        Electric GetElectricCarById(int id);
-        Combustion GetCombustionCarById(int id);
-        void RenewElectric(Electric electric);
-        void RenewCombustion(Combustion combustion);
-        void DeleteElectricCarById(int id);
-        void DeleteCombustionCarById(int id);
+        Task<List<Electric>> ReadAllElectric();
+        Task<List<Combustion>> ReadAllCombustion();
+        Task WriteOneElectric(Electric electric);
+        Task WriteOneCombustion(Combustion combustion);
+        Task<Electric> GetElectricCarById(int id);
+        Task<Combustion> GetCombustionCarById(int id);
+        Task RenewElectric(Electric electric);
+        Task RenewCombustion(Combustion combustion);
+        Task DeleteElectricCarById(int id);
+        Task DeleteCombustionCarById(int id);
     }
 }

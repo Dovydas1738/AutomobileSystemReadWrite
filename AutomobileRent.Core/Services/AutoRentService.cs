@@ -23,9 +23,9 @@ namespace AutomobileRent.Core.Services
             _rentService = rentService;
         }
 
-        public List<Car> GetCars()
+        public async Task<List<Car>> GetAllCars()
         {
-            return _carsService.GetAllCars();
+            return await _carsService.GetAllCars();
         }
 
         public void AddNewCar(Car car)
@@ -33,34 +33,34 @@ namespace AutomobileRent.Core.Services
             _carsService.AddCar(car);
         }
 
-        public List<Electric> GetAllElectric()
+        public async Task<List<Electric>> GetAllElectric()
         {
-            return _carsService.ReadAllElectric();
+            return await _carsService.ReadAllElectric();
         }
 
-        public List<Combustion> GetAllCombustion()
+        public async Task<List<Combustion>> GetAllCombustion()
         {
-            return _carsService.ReadAllCombustion();
+            return await _carsService.ReadAllCombustion();
         }
 
-        public void AddNewElectric(Electric electric)
+        public async Task AddNewElectric(Electric electric)
         {
-            _carsService.WriteOneElectric(electric);
+            await _carsService.WriteOneElectric(electric);
         }
 
-        public void AddNewCombustion(Combustion combustion)
+        public async Task AddNewCombustion(Combustion combustion)
         {
-            _carsService.WriteOneCombustion(combustion);
+            await _carsService.WriteOneCombustion(combustion);
         }
 
-        public List<Customer> GetAllCustomers()
+        public async Task<List<Customer>> GetAllCustomers()
         {
-            return _customersService.ReadCustomersDB();
+            return await _customersService.ReadCustomersDB();
         }
 
-        public void AddNewCustomer(Customer customer)
+        public async Task AddNewCustomer(Customer customer)
         {
-            _customersService.WriteCustomerDB(customer);
+            await _customersService.WriteCustomerDB(customer);
         }
 
         public List<RentOrder> GetAllRentOrders()
@@ -73,34 +73,34 @@ namespace AutomobileRent.Core.Services
             _rentService.WriteOneRentOrder(rentOrder);
         }
 
-        public Car GetElectricCarById(int id)
+        public async Task<Car> GetElectricCarById(int id)
         {
-           return _carsService.GetElectricCarById(id);
+           return await _carsService.GetElectricCarById(id);
         }
 
-        public Car GetCombustionCarById(int id)
+        public async Task<Car> GetCombustionCarById(int id)
         {
-            return _carsService.GetCombustionCarById(id);
+            return await _carsService.GetCombustionCarById(id);
         }
 
-        public void RenewElectric(Electric electric)
+        public async Task RenewElectric(Electric electric)
         {
-            _carsService.RenewElectric(electric);
+            await _carsService.RenewElectric(electric);
         }
 
-        public void RenewCombustion(Combustion combustion)
+        public async Task RenewCombustion(Combustion combustion)
         {
-            _carsService.RenewCombustion(combustion);
+            await _carsService.RenewCombustion(combustion);
         }
 
-        public Customer GetCustomerById(int id)
+        public async Task<Customer> GetCustomerById(int id)
         {
-            return _customersService.GetCustomerById(id);
+            return await _customersService.GetCustomerById(id);
         }
 
-        public void RenewCustomer(Customer customer)
+        public async Task RenewCustomer(Customer customer)
         {
-            _customersService.RenewCustomer(customer);
+            await _customersService.RenewCustomer(customer);
         }
 
         public RentOrder GetOrderById(int id)
@@ -113,19 +113,19 @@ namespace AutomobileRent.Core.Services
             _rentService.RenewRentOrder(rentOrder);
         }
 
-        public void DeleteCustomerById(int id)
+        public async Task DeleteCustomerById(int id)
         {
-            _customersService.DeleteCustomerById(id);
+            await _customersService.DeleteCustomerById(id);
         }
 
-        public void DeleteElectricCarById(int id)
+        public async Task DeleteElectricCarById(int id)
         {
-            _carsService.DeleteElectricCarById(id);
+            await _carsService.DeleteElectricCarById(id);
         }
 
-        public void DeleteCombustionCarById(int id)
+        public async Task DeleteCombustionCarById(int id)
         {
-            _carsService.DeleteCombustionCarById(id);
+            await _carsService.DeleteCombustionCarById(id);
         }
 
         public void DeleteRentOrderById(int id)

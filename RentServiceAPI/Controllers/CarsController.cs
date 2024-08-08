@@ -18,27 +18,35 @@ namespace RentServiceAPI.Controllers
             _autoRentService = autoRentService;
         }
 
-        [HttpGet("GetAllElectricCars")]
-        public IActionResult Index()
+        [HttpGet("GetAllCars")]
+        public async Task<IActionResult> GetAllCars()
         {
-            var allCars = _autoRentService.GetAllElectric();
+            var allCars = await _autoRentService.GetAllCars();
+            return Ok(allCars);
+        }
+
+        [HttpGet("GetAllElectricCars")]
+        public async Task<IActionResult> Index()
+        {
+            var allCars = await _autoRentService.GetAllElectric();
             return Ok(allCars);
         }
 
         [HttpGet("GetAllCombustionCars")]
-        public IActionResult GetAllCombustion()
+        public async Task<IActionResult> GetAllCombustion()
         {
-            var allCars = _autoRentService.GetAllCombustion();
+            var allCars = await _autoRentService.GetAllCombustion();
             return Ok(allCars);
         }
 
         [HttpPost("AddElectric")]
-        public IActionResult AddElectric(Electric ev)
+        public async Task<IActionResult> AddElectric(Electric ev)
         {
             try
             {
                 _autoRentService.AddNewElectric(ev);
                 return Ok();
+
             }
             catch
             {
@@ -47,7 +55,7 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpPost("AddCombustion")]
-        public IActionResult AddCombustion(Combustion combustion)
+        public async Task<IActionResult> AddCombustion(Combustion combustion)
         {
             try
             {
@@ -61,7 +69,7 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpPatch("UpdateElectric")]
-        public IActionResult UpdateElectric(Electric ev)
+        public async Task<IActionResult> UpdateElectric(Electric ev)
         {
             try
             {
@@ -76,7 +84,7 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpPatch("UpdateCombustion")]
-        public IActionResult UpdateCombustion(Combustion combustion)
+        public async Task<IActionResult> UpdateCombustion(Combustion combustion)
         {
             try
             {
@@ -91,7 +99,7 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpDelete("DeleteElectricById")]
-        public IActionResult DeleteElectricById(int id)
+        public async Task<IActionResult> DeleteElectricById(int id)
         {
             try
             {
@@ -105,7 +113,7 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpDelete("DeleteCombustionById")]
-        public IActionResult DeleteCombustionById(int id)
+        public async Task<IActionResult> DeleteCombustionById(int id)
         {
             try
             {

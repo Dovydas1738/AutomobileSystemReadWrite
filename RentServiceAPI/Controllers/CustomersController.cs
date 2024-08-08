@@ -17,12 +17,19 @@ namespace RentServiceAPI.Controllers
             _autoRentService = autoRentService;
         }
 
+        [HttpGet("GetCustomerById")]
+        public async Task<IActionResult> GetWorkerById(int id)
+        {
+            var customer = await _autoRentService.GetCustomerById(id);
+            return Ok(customer);
+        }
+
         [HttpGet("GetAllCustomers")]
-        public IActionResult GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers()
         {
             try
             {
-                var allCars = _autoRentService.GetAllCustomers();
+                var allCars = await _autoRentService.GetAllCustomers();
                 return Ok(allCars);
             }
             catch
@@ -32,11 +39,11 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpPost("AddCustomer")]
-        public IActionResult AddCustomer(Customer customer)
+        public async Task<IActionResult> AddCustomer(Customer customer)
         {
             try
             {
-                _autoRentService.AddNewCustomer(customer);
+                await _autoRentService.AddNewCustomer(customer);
                 return Ok();
             }
             catch
@@ -46,12 +53,12 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpPatch("UpdateCustomer")]
-        public IActionResult UpdateCustomer(Customer customer)
+        public async Task<IActionResult> UpdateCustomer(Customer customer)
         {
             try
             {
 
-                _autoRentService.RenewCustomer(customer);
+                await _autoRentService.RenewCustomer(customer);
                 return Ok();
             }
             catch
@@ -61,11 +68,11 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpDelete("DeleteCustomerById")]
-        public IActionResult DeleteCustomerById(int id)
+        public async Task<IActionResult> DeleteCustomerById(int id)
         {
             try
             {
-                _autoRentService.DeleteCustomerById(id);
+                await _autoRentService.DeleteCustomerById(id);
                 return Ok();
             }
             catch
@@ -75,7 +82,7 @@ namespace RentServiceAPI.Controllers
         }
 
         [HttpGet("GetAllCustomersOrders")]
-        public IActionResult GetAllCustomersOrders(int id)
+        public async Task<IActionResult> GetAllCustomersOrders(int id)
         {
             try
             {

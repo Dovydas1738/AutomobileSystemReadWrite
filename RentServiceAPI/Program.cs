@@ -1,6 +1,7 @@
 using AutomobileRent.Core.Contracts;
 using AutomobileRent.Core.Repositories;
 using AutomobileRent.Core.Services;
+using MongoDB.Driver;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IMongoClient, MongoClient>(_ =>new MongoClient("mongodb+srv://dovism:SLAPTAZODIS@cluster0.dh7gm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"));
+builder.Services.AddTransient<IMongoDbCacheRepository, MongoDbCacheRepository>();
 builder.Services.AddTransient<IWorkerDBRepository, WorkerDBRepository>(_=> new WorkerDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;"));
 builder.Services.AddTransient<IWorkerService, WorkerService>();
 builder.Services.AddTransient<IRentOrderRepository, RentOrderDBRepository>(_ => new RentOrderDBRepository("Server=localhost;Database=autonuoma;Trusted_Connection=True;"));

@@ -14,10 +14,12 @@ namespace AutomobileRent.Core.Services
     {
 
         private readonly ICustomersRepository _customersRepository;
+        private readonly IMongoDbCacheRepository _mongoCache;
 
-        public CustomersService(ICustomersRepository customersRepository)
+        public CustomersService(ICustomersRepository customersRepository, IMongoDbCacheRepository mongoCache)
         {
             _customersRepository = customersRepository;
+            _mongoCache = mongoCache;
         }
 
         public void AddCustomer(Customer customer)
@@ -25,9 +27,9 @@ namespace AutomobileRent.Core.Services
             _customersRepository.WriteOneCustomer(customer);
         }
 
-        public void DeleteCustomerById(int id)
+        public async Task DeleteCustomerById(int id)
         {
-            _customersRepository.DeleteCustomerById(id);
+            await _customersRepository.DeleteCustomerById(id);
         }
 
         public List<Customer> GetAllCustomers()
@@ -35,14 +37,21 @@ namespace AutomobileRent.Core.Services
             return _customersRepository.ReadCustomers();
         }
 
-        public Customer GetCustomerById(int id)
+        public async Task<Customer> GetCustomerById(int id)
         {
-            return _customersRepository.GetCustomerById(id);
+            Customer result;
+            if ((result = await _mongoCache.GetCustomerById(id)) != null)
+            {
+                return result;
+            }
+            result = await _customersRepository.GetCustomerById(id);
+            await _mongoCache.AddCustomer(result);
+            return result;
         }
 
-        public List<Customer> ReadCustomersDB()
+        public async Task<List<Customer>> ReadCustomersDB()
         {
-            return _customersRepository.ReadCustomersDB();
+            return await _customersRepository.ReadCustomersDB();
         }
 
         public void ReadFromFile()
@@ -50,15 +59,15 @@ namespace AutomobileRent.Core.Services
             _customersRepository.ReadCustomers();
         }
 
-        public void RenewCustomer(Customer customer)
+        public async Task RenewCustomer(Customer customer)
         {
-            _customersRepository.RenewCustomer(customer);
+            await _customersRepository.RenewCustomer(customer);
         }
 
         public List<Customer> SearchByNameSurname(string name, string surname)
         {
             List<Customer> customerSearchResult = new List<Customer>();
-            List<Customer> customers = _customersRepository.ReadCustomersDB();
+            List<Customer> customers = _customersRepository.ReadCustomersDB().Result;
             foreach (Customer b in customers)
             {
                 if (b.Name == name && b.Surname == surname)
@@ -69,9 +78,9 @@ namespace AutomobileRent.Core.Services
             return customerSearchResult;
         }
 
-        public void WriteCustomerDB(Customer customer)
+        public async Task WriteCustomerDB(Customer customer)
         {
-            _customersRepository.WriteCustomerDB(customer);
+            await _customersRepository.WriteCustomerDB(customer);
         }
 
         public void WriteToFile(List<Customer> customers)
