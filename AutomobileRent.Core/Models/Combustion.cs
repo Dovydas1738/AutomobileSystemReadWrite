@@ -27,6 +27,10 @@ namespace AutomobileRent.Core.Models
             FuelConsumption = fuelConsumption;
         }
 
+        public Combustion(int id) : base(id)
+        {
+            Id = id;
+        }
 
         public Combustion() { }
 

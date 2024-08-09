@@ -21,7 +21,9 @@ namespace AutomobileRent.Core.Services
 
         public async Task AddWorker(Worker worker)
         {
-            await _workerRepository.AddWorker(worker);
+            var workerSql = _workerRepository.AddWorker(worker);
+            var workerMongo = _mongoCache.AddWorker(worker);
+            await Task.WhenAll(workerSql, workerMongo);
         }
 
         public async Task AddWorkersBaseSalary(Worker worker, decimal salary)
@@ -73,7 +75,9 @@ namespace AutomobileRent.Core.Services
 
         public async Task RenewWorkerData(Worker worker)
         {
-            await _workerRepository.RenewWorkerData(worker);
+            var workerSql = _workerRepository.RenewWorkerData(worker);
+            var workerMongo = _mongoCache.UpdateWorker(worker);
+            await Task.WhenAll(workerSql, workerMongo);
         }
 
         public async Task UpdateWorkerBaseSalary(Worker worker, decimal salary)

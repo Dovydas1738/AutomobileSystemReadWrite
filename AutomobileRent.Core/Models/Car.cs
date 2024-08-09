@@ -28,6 +28,11 @@ namespace AutomobileRent.Core.Models
             RentPrice = rentPrice;
         }
 
+        public Car(int id)
+        {
+            Id=id;
+        }
+
 
         public Car() { }
 

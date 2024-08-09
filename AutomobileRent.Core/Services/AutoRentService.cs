@@ -28,10 +28,10 @@ namespace AutomobileRent.Core.Services
             return await _carsService.GetAllCars();
         }
 
-        public void AddNewCar(Car car)
-        {
-            _carsService.AddCar(car);
-        }
+        //public void AddNewCar(Car car)
+        //{
+        //    _carsService.AddCar(car);
+        //}
 
         public async Task<List<Electric>> GetAllElectric()
         {
@@ -63,14 +63,14 @@ namespace AutomobileRent.Core.Services
             await _customersService.WriteCustomerDB(customer);
         }
 
-        public List<RentOrder> GetAllRentOrders()
+        public async Task<List<RentOrder>> GetAllRentOrders()
         {
-            return _rentService.ReadAllRentOrders();
+            return await _rentService.ReadAllRentOrders();
         }
 
-        public void AddOneRentOrder(RentOrder rentOrder)
+        public async Task AddOneRentOrder(RentOrder rentOrder)
         {
-            _rentService.WriteOneRentOrder(rentOrder);
+            await _rentService.WriteOneRentOrder(rentOrder);
         }
 
         public async Task<Car> GetElectricCarById(int id)
@@ -103,14 +103,14 @@ namespace AutomobileRent.Core.Services
             await _customersService.RenewCustomer(customer);
         }
 
-        public RentOrder GetOrderById(int id)
+        public async Task<RentOrder> GetOrderById(int id)
         {
-            return _rentService.GetRentOrderById(id);
+            return await _rentService.GetRentOrderById(id);
         }
 
-        public void RenewRentOrder(RentOrder rentOrder)
+        public async Task RenewRentOrder(RentOrder rentOrder)
         {
-            _rentService.RenewRentOrder(rentOrder);
+            await _rentService.RenewRentOrder(rentOrder);
         }
 
         public async Task DeleteCustomerById(int id)
@@ -128,9 +128,9 @@ namespace AutomobileRent.Core.Services
             await _carsService.DeleteCombustionCarById(id);
         }
 
-        public void DeleteRentOrderById(int id)
+        public async Task DeleteRentOrderById(int id)
         {
-            _rentService.DeleteRentOrderById(id);
+            await _rentService.DeleteRentOrderById(id);
         }
 
     }

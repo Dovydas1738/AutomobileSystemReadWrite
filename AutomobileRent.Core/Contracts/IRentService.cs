@@ -9,15 +9,15 @@ namespace AutomobileRent.Core.Contracts
 {
      public interface IRentService
      {
-        void CreateOrder(RentOrder order);
-        List<RentOrder> GetAllOrders();
-        decimal GetTotalRentPrice();
-        List<RentOrder> GetOrdersByCustomer(Customer customer);
-        List<RentOrder> ReadAllRentOrders();
-        void WriteOneRentOrder(RentOrder rentOrder);
-        RentOrder GetRentOrderById(int id);
-        void RenewRentOrder(RentOrder rentOrder);
-        void DeleteRentOrderById(int id);
+        //void CreateOrder(RentOrder order);
+        //List<RentOrder> GetAllOrders();
+        Task<decimal> GetTotalRentPrice();
+        //List<RentOrder> GetOrdersByCustomer(Customer customer);
+        Task<List<RentOrder>> ReadAllRentOrders();
+        Task WriteOneRentOrder(RentOrder rentOrder);
+        Task<RentOrder> GetRentOrderById(int id);
+        Task RenewRentOrder(RentOrder rentOrder);
+        Task DeleteRentOrderById(int id);
 
      }
 }

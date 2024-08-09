@@ -33,7 +33,10 @@ namespace AutomobileRent.Core.Models
 
         }
 
-
+        public Electric(int id) : base(id)
+        {
+            Id = id;
+        }
         public Electric()
         {
 

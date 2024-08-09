@@ -61,7 +61,9 @@ namespace AutomobileRent.Core.Services
 
         public async Task RenewCustomer(Customer customer)
         {
-            await _customersRepository.RenewCustomer(customer);
+            var customerSql = _customersRepository.RenewCustomer(customer);
+            var customerMongo = _mongoCache.UpdateCustomer(customer);
+            await Task.WhenAll(customerSql, customerMongo);
         }
 
         public List<Customer> SearchByNameSurname(string name, string surname)
@@ -80,7 +82,9 @@ namespace AutomobileRent.Core.Services
 
         public async Task WriteCustomerDB(Customer customer)
         {
-            await _customersRepository.WriteCustomerDB(customer);
+            var customerSql = _customersRepository.WriteCustomerDB(customer);
+            var customerMongo = _mongoCache.AddCustomer(customer);
+            await Task.WhenAll(customerSql, customerMongo);
         }
 
         public void WriteToFile(List<Customer> customers)

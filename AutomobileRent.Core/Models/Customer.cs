@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace AutomobileRent.Core.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime BirthDate { get; set; }
+        [BsonId]
         public int CustomerId { get; set; }
-
 
         public Customer(string name, string surname, DateTime birthDate)
         {
@@ -22,6 +23,11 @@ namespace AutomobileRent.Core.Models
             Surname = surname;
             BirthDate = birthDate;
             CustomerId = CustomerId;
+        }
+
+        public Customer(int customerId)
+        {
+            CustomerId = customerId;
         }
 
         //public Customer(int customerId, string name, string surname, DateTime birthDate)

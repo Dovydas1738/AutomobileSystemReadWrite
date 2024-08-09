@@ -23,66 +23,66 @@ namespace AutomobileRent.Core.Services
 
 
 
-        public void CreateOrder(RentOrder order)
-        {
-            AllOrders.Add(order);
+        //public void CreateOrder(RentOrder order)
+        //{
+        //    AllOrders.Add(order);
 
-            //Console.WriteLine("Your order was successful!");
-            //Console.WriteLine("Price: " + order.CountRentPrice());
-            //Console.WriteLine("Rental ends: " + order.GetRentEndDate);
-        }
+        //    Console.WriteLine("Your order was successful!");
+        //    Console.WriteLine("Price: " + order.CountRentPrice());
+        //    Console.WriteLine("Rental ends: " + order.GetRentEndDate);
+        //}
 
-        public List<RentOrder> GetAllOrders()
-        {
-            return AllOrders;
-        }
+        //public List<RentOrder> GetAllOrders()
+        //{
+        //    return AllOrders;
+        //}
 
-        public List<RentOrder> GetOrdersByCustomer(Customer customer)
-        {
-            List<RentOrder> customerOrders = new List<RentOrder>();
-            foreach (RentOrder order in AllOrders)
-            {
-                if (order.Customer == customer)
-                {
-                    customerOrders.Add(order);
-                }
-            }
-            return customerOrders;
-        }
+        //public List<RentOrder> GetOrdersByCustomer(Customer customer)
+        //{
+        //    List<RentOrder> customerOrders = new List<RentOrder>();
+        //    foreach (RentOrder order in AllOrders)
+        //    {
+        //        if (order.Customer == customer)
+        //        {
+        //            customerOrders.Add(order);
+        //        }
+        //    }
+        //    return customerOrders;
+        //}
 
-        public decimal GetTotalRentPrice()
+        public async Task<decimal> GetTotalRentPrice()
         {
             decimal totalPrice = 0;
 
-            foreach (RentOrder order in _rentOrderRepository.ReadAllRentOrders())
+            foreach (RentOrder order in await _rentOrderRepository.ReadAllRentOrders())
             {
                 totalPrice += order.RentPrice;
             }
             return totalPrice;
         }
 
-        public List<RentOrder> ReadAllRentOrders()
+        public async Task<List<RentOrder>> ReadAllRentOrders()
         {
-            return _rentOrderRepository.ReadAllRentOrders();
+            return await _rentOrderRepository.ReadAllRentOrders();
         }
 
-        public void WriteOneRentOrder(RentOrder rentOrder)
+        public async Task WriteOneRentOrder(RentOrder rentOrder)
         {
-            _rentOrderRepository.WriteOneRentOrder(rentOrder);
+            await _rentOrderRepository.WriteOneRentOrder(rentOrder);
         }
 
-        public RentOrder GetRentOrderById(int id)
+        public async Task<RentOrder> GetRentOrderById(int id)
         {
-            return _rentOrderRepository.GetRentOrderById(id);
+            return await _rentOrderRepository.GetRentOrderById(id);
         }
 
-        public void RenewRentOrder(RentOrder rentOrder)
+        public async Task RenewRentOrder(RentOrder rentOrder)
         {
-            _rentOrderRepository.RenewRentOrder(rentOrder);
+            await _rentOrderRepository.RenewRentOrder(rentOrder);
         }
-        public void DeleteRentOrderById(int id)
+        public async Task DeleteRentOrderById(int id)
         {
-            _rentOrderRepository.DeleteRentOrderById(id);
+            await _rentOrderRepository.DeleteRentOrderById(id);
         }
     }
 }

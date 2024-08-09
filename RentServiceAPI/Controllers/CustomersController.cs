@@ -88,7 +88,7 @@ namespace RentServiceAPI.Controllers
             {
                 List<RentOrder> allCustomerOrders = new List<RentOrder>();
 
-                foreach (RentOrder a in _autoRentService.GetAllRentOrders())
+                foreach (RentOrder a in await _autoRentService.GetAllRentOrders())
                 {
                     if (id == a.CustomerId)
                     {

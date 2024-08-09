@@ -11,10 +11,10 @@ namespace AutomobileRent.Core.Contracts
 {
     public interface IRentOrderRepository
     {
-        List<RentOrder> ReadAllRentOrders();
-        void WriteOneRentOrder(RentOrder rentOrder);
-        void RenewRentOrder(RentOrder rentOrder);
-        RentOrder GetRentOrderById(int id);
-        void DeleteRentOrderById(int id);
+        Task<List<RentOrder>> ReadAllRentOrders();
+        Task WriteOneRentOrder(RentOrder rentOrder);
+        Task RenewRentOrder(RentOrder rentOrder);
+        Task<RentOrder> GetRentOrderById(int id);
+        Task DeleteRentOrderById(int id);
     }
 }

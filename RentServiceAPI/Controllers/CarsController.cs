@@ -18,6 +18,21 @@ namespace RentServiceAPI.Controllers
             _autoRentService = autoRentService;
         }
 
+        [HttpGet("GetElectricById")]
+        public async Task<IActionResult> GetElectricById(int id)
+        {
+            var electric = await _autoRentService.GetElectricCarById(id);
+            return Ok(electric);
+        }
+
+        [HttpGet("GetCombustionById")]
+        public async Task<IActionResult> GetCombustionById(int id)
+        {
+            var combustion = await _autoRentService.GetCombustionCarById(id);
+            return Ok(combustion);
+        }
+
+
         [HttpGet("GetAllCars")]
         public async Task<IActionResult> GetAllCars()
         {
@@ -44,7 +59,7 @@ namespace RentServiceAPI.Controllers
         {
             try
             {
-                _autoRentService.AddNewElectric(ev);
+                await _autoRentService.AddNewElectric(ev);
                 return Ok();
 
             }
@@ -59,12 +74,12 @@ namespace RentServiceAPI.Controllers
         {
             try
             {
-                _autoRentService.AddNewCombustion(combustion);
+                await _autoRentService.AddNewCombustion(combustion);
                 return Ok();
             }
-            catch
+            catch (Exception ex)
             {
-                return Problem();
+                return Problem(ex.Message);
             }
         }
 
@@ -74,7 +89,7 @@ namespace RentServiceAPI.Controllers
             try
             {
 
-                _autoRentService.RenewElectric(ev);
+                await _autoRentService.RenewElectric(ev);
                 return Ok();
             }
             catch
@@ -89,7 +104,7 @@ namespace RentServiceAPI.Controllers
             try
             {
 
-                _autoRentService.RenewCombustion(combustion);
+                await _autoRentService.RenewCombustion(combustion);
                 return Ok();
             }
             catch
@@ -103,7 +118,7 @@ namespace RentServiceAPI.Controllers
         {
             try
             {
-                _autoRentService.DeleteElectricCarById(id);
+                await _autoRentService.DeleteElectricCarById(id);
                 return Ok();
             }
             catch
@@ -117,7 +132,7 @@ namespace RentServiceAPI.Controllers
         {
             try
             {
-                _autoRentService.DeleteCombustionCarById(id);
+                await _autoRentService.DeleteCombustionCarById(id);
                 return Ok();
             }
             catch

@@ -32,6 +32,11 @@ namespace AutomobileRent.Core.Models
             BaseSalary = baseSalary;
         }
 
+        public Worker(int id)
+        {
+
+            Id = id; 
+        }
 
         public decimal WorkerSalary(decimal baseSalary, int completedOrders)
         {

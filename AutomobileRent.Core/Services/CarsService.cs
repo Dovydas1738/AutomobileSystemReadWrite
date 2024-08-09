@@ -13,11 +13,13 @@ namespace AutomobileRent.Core.Services
     {
         
         private readonly ICarsRepository _carsRepository;
+        private readonly IMongoDbCacheRepository _mongoDbCacheRepository;
 
 
-        public CarsService(ICarsRepository carsRepository)
+        public CarsService(ICarsRepository carsRepository, IMongoDbCacheRepository mongoDbCacheRepository)
         {
             _carsRepository = carsRepository;
+            _mongoDbCacheRepository = mongoDbCacheRepository;
         }
 
 
@@ -87,32 +89,57 @@ namespace AutomobileRent.Core.Services
 
         public async Task WriteOneElectric(Electric electric)
         {
-            await _carsRepository.WriteOneElectric(electric);
+            var electricSql = _carsRepository.WriteOneElectric(electric);
+            var electricMongo = _mongoDbCacheRepository.AddElectric(electric);
+            await Task.WhenAll(electricSql, electricMongo);
         }
 
         public async Task WriteOneCombustion(Combustion combustion)
         {
-            await _carsRepository.WriteOneCombustion(combustion);
+            var combustionSql = _carsRepository.WriteOneCombustion(combustion);
+            var combustionMongo = _mongoDbCacheRepository.AddCombustion(combustion);
+            await Task.WhenAll(combustionSql, combustionMongo);
         }
 
         public async Task<Electric> GetElectricCarById(int id)
         {
-            return await _carsRepository.GetElectricCarById(id);
+            Electric result;
+            if ((result = await _mongoDbCacheRepository.GetElectricById(id)) != null)
+            {
+                return result;
+            }
+            result = await _carsRepository.GetElectricCarById(id);
+            await _mongoDbCacheRepository.AddElectric(result);
+            return result;
         }
 
         public async Task<Combustion> GetCombustionCarById(int id)
         {
-            return await _carsRepository.GetCombustionCarById(id);
+            Combustion result;
+            if ((result = await _mongoDbCacheRepository.GetCombustionById(id)) != null)
+            {
+                return result;
+            }
+            result = await _carsRepository.GetCombustionCarById(id);
+            await _mongoDbCacheRepository.AddCombustion(result);
+            return result;
+
         }
 
         public async Task RenewElectric(Electric electric)
         {
-            await _carsRepository.RenewElectric(electric);
+            var electricSql = _carsRepository.RenewElectric(electric);
+            var electricMongo = _mongoDbCacheRepository.UpdateElectric(electric);
+
+            await Task.WhenAll(electricSql, electricMongo);
         }
 
         public async Task RenewCombustion(Combustion combustion)
         {
-            await _carsRepository.RenewCombustion(combustion);
+            var combustionSql = _carsRepository.RenewCombustion(combustion);
+            var combustionMongo = _mongoDbCacheRepository.UpdateCombustion(combustion);
+
+            await Task.WhenAll(combustionSql, combustionMongo);
         }
 
         public async Task DeleteElectricCarById(int id)

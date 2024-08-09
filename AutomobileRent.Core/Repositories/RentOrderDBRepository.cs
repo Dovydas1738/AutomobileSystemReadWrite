@@ -19,16 +19,16 @@ namespace AutomobileRent.Core.Repositories
             _dbConnectionString = connectionString;
         }
 
-        public List<RentOrder> ReadAllRentOrders()
+        public async Task<List<RentOrder>> ReadAllRentOrders()
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            List<RentOrder> result = dbConnection.Query<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM [dbo].[NuomosUzsakymai]").ToList();
+            var result = await dbConnection.QueryAsync<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM [dbo].[NuomosUzsakymai]");
             dbConnection.Close();
-            return result;
+            return result.ToList();
         }
 
-        public void WriteOneRentOrder(RentOrder rentOrder)
+        public async Task WriteOneRentOrder(RentOrder rentOrder)
         {
             string sqlCommand = "INSERT INTO NuomosUzsakymai ([Customer],[Car_id],[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId]) VALUES " +
             "(@Customer, @Car_id, @Type, @RentStart, @RentDuration, @RentPrice, @WorkerId)";
@@ -47,21 +47,21 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
         }
 
-        public RentOrder GetRentOrderById(int id)
+        public async Task<RentOrder> GetRentOrderById(int id)
         {
             using IDbConnection dbConnection = new SqlConnection(_dbConnectionString);
             dbConnection.Open();
-            RentOrder result = dbConnection.QueryFirst<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM [dbo].[NuomosUzsakymai] WHERE [Id] = @Id", new { Id = id });
+            var result = await dbConnection.QueryFirstAsync<RentOrder>(@"SELECT [Id], [Customer] AS CustomerId,[Car_id] AS CarId,[Type],[RentStart],[RentDuration],[RentPrice],[WorkerId] FROM [dbo].[NuomosUzsakymai] WHERE [Id] = @Id", new { Id = id });
             dbConnection.Close();
             return result;
 
         }
 
-        public void RenewRentOrder(RentOrder rentOrder)
+        public async Task RenewRentOrder(RentOrder rentOrder)
         {
             string sqlCommand = @"UPDATE [NuomosUzsakymai]
             SET [Customer] = @Customer
@@ -87,13 +87,13 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
 
 
         }
 
-        public void DeleteRentOrderById(int id)
+        public async Task DeleteRentOrderById(int id)
         {
             string sqlCommand = "DELETE FROM NuomosUzsakymai WHERE Id = @id";
 
@@ -104,7 +104,7 @@ namespace AutomobileRent.Core.Repositories
 
             using (var connection = new SqlConnection(_dbConnectionString))
             {
-                connection.Execute(sqlCommand, parameters);
+                await connection.ExecuteAsync(sqlCommand, parameters);
             }
         }
 
